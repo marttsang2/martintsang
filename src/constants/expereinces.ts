@@ -15,7 +15,7 @@ const experiences = [
       endDate: "Current",
       skills: ["TypeScript", "Nest.js", "MySQL", "MongoDB", "ActiveMQ", "Jest", "Mocha"],
       description: "I built scalable web apps with TypeScript and Nest.js, reducing bugs by implementing test-driven development. Automated testing and code reviews improved software quality. Active Agile/Scrum participation ensured adherence to best practices.",
-      url: "https://superacc.ai/"
+      url: "https://www.apoidea.ai/"
     },
     {
       title: "Software Engineer",

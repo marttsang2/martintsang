@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import React from 'react'
-import { ExperienceCard } from '../components/Card'
-import experiences from '../constants/expereinces'
+import ExperienceCard from '@/components/Card/ExperienceCard'
+import experiences from '@/constants/expereinces'
+import aboutMe from '@/constants/aboutMe'
+import Section from '@/components/Section'
+import ProjectCard from '@/components/Card/ProjectCard'
+import projects from '@/constants/projects'
 
 export default function Home() {
   return (
@@ -27,10 +31,10 @@ export default function Home() {
             </div>
           </header>
           <div className='pt-12 lg:w-1/2 lg:py-24'>
-            <p className="text-medium font-medium my-2 uppercase font-slate-200">
-              Experience
-            </p>
-            <li className="flex flex-col group/list">
+            <p className=" whitespace-pre-line">{
+              aboutMe.map((text) => <p key={text} className="mb-4 text-medium font-sm text-slate-400">{text}<br /></p>)
+            }</p>
+            <Section title='Experience'>
               {
                 experiences.map((experience) => (
                   <ol key={experience.title} className="lg:mb-12">
@@ -46,7 +50,23 @@ export default function Home() {
                   </ol>
                 ))
               }
-            </li>
+            </Section>
+            <Section title='Project'>
+              {
+                projects.map((project) => (
+                  <ol key={project.title} className="lg:mb-12">
+                    <ProjectCard
+                      title={project.title}
+                      company={project.company}
+                      date={project.date}
+                      skills={project.skills}
+                      description={project.description}
+                      url={project.url}
+                    />
+                  </ol>
+                ))
+              }
+            </Section>
           </div>
         </div>
       </main>
