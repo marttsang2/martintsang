@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['free.pagepeeker.com'],
-      },
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig
