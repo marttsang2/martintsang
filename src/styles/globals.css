@@ -4,6 +4,7 @@
 
 * {
   font-family: 'Raleway', sans-serif;
+  transition: background-color 0.2s ease;
 }
 
 /* width */
@@ -30,26 +31,4 @@
   --foreground-rgb: #27374D;
   --background-start-rgb: 0, 11, 24;
   --background-end-rgb: 0, 23, 45;
-}
-
-@media (prefers-color-scheme: dark) {
-  /* :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  } */
-}
-
-p {
-  color: #EAEAEA;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }

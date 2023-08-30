@@ -22,9 +22,9 @@ export default function Home() {
     <li 
       className={`my-2 group/item flex items-center hover:!opacity-100 cursor-pointer ${title === section ? 'opacity-100' : 'opacity-50'}`} 
       onClick={() => setSection(title)}>
-      <p className='text-sm'>{String(order).padStart(2, '0')}</p>
-      <div className='mx-4 transition-all w-[40px] group-hover/item:w-[80px] h-[1px] bg-white'></div>
-      <p className='text-md font-semibold'>{title}</p>
+      <p className='text-sm dark:text-white'>{String(order).padStart(2, '0')}</p>
+      <div className='mx-4 transition-all w-[40px] group-hover/item:w-[80px] h-[1px] bg-black dark:bg-white'></div>
+      <p className='text-md dark:text-white font-semibold'>{title}</p>
     </li>
   )
 
@@ -32,12 +32,12 @@ export default function Home() {
     <Container maxWidth='lg'>
       <div className='h-screen flex pt-20 lg:grid lg:grid-cols-2'>
         <div>
-          <p className='mb-6 text-7xl font-semibold leading-[1.2]'>
+          <p className='mb-6 text-7xl dark:text-white font-semibold leading-[1.2]'>
             {`Hello I’m`}
             <br/>
             Martin Tsang
           </p>
-          <p className='mb-6 w-[480px] opacity-75 leading-[1.5]'>
+          <p className='mb-6 w-[480px] dark:text-white opacity-75 leading-[1.5]'>
             {`I am currently seeking opportunities to work as a software engineer.
             I specialize in building scalable and high-performing solutions that users love. With a collaborative mindset and experience in Agile methodologies, I enjoy working as part of a team to bring projects to life.`}
           </p>
@@ -48,19 +48,19 @@ export default function Home() {
             <ListItem order={4} title='MUSIC' />
           </ul>
           <div className='absolute bottom-20 flex items-center mt-6'>
-            <Link href="https://github.com/marttsang2" className='relative flex items-center mr-4 opacity-75 hover:opacity-100'>
-              <IoLogoGithub color='white' size={28} />
+            <Link href="https://github.com/marttsang2" className='relative flex items-center mr-6 p-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md'>
+              <IoLogoGithub size={28} className='dark:text-gray-50' />
             </Link>
-            <Link href="https://www.linkedin.com/in/marttsang2/" className='relative flex items-center mr-4 opacity-75 hover:opacity-100'>
-              <IoLogoLinkedin color='white' size={28} />
+            <Link href="https://www.linkedin.com/in/marttsang2/" className='relative flex items-center mr-4 p-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md'>
+              <IoLogoLinkedin size={28} className='dark:text-gray-50' />
             </Link>
           </div>
         </div>
         <div className='px-4 h-full overflow-y-auto'>
-            {section === 'PROJECTS' && <ProjectSection />}
-            {section === 'EXPERIENCES' && <ExperienceSection />}
-            {section === 'BLOGS' && <div>Blogs</div>}
-            {section === 'MUSIC' && <MusicSection />}
+          {section === 'PROJECTS' && <ProjectSection />}
+          {section === 'EXPERIENCES' && <ExperienceSection />}
+          {section === 'BLOGS' && <div>Blogs</div>}
+          {section === 'MUSIC' && <MusicSection />}
         </div>
       </div>
     </Container>
