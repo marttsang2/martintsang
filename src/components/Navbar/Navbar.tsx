@@ -10,7 +10,15 @@ const Navbar = () => {
         <Link href='/' className='flex items-center'>
           <Image src="/favicon.png" alt='favicon' width={28} height={28} />
         </Link>
-        <ThemeToggle />
+        <div className='flex items-center'>
+          <div className='group group/list transition-all flex dark:text-white'>
+            <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/'>Home</Link>
+            <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/about'>About</Link>
+            <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/blog'>Blog</Link>
+            <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/projects'>Projects</Link>
+            <ThemeToggle />
+          </div>
+        </div>
       </div>
     </nav>
   )

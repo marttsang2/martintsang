@@ -48,22 +48,23 @@ const ProjectSection = () => {
     <div className='group'>
       {
         projects.map((project, index) => (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 1.5 * (index / projects.length)}}    
-            className='group/item py-6 px-8 mb-2 w-full bg-gray-100 hover:bg-gray-200 dark:bg-[#0a182b] cursor-pointer rounded-lg' 
-            key={project.company}
-          >
-            <div className='hover:!opacity-100 group-hover:opacity-50'>
-              <p className='relative inline-block pr-8 text-xl dark:text-gray-50 font-semibold'>
-                {project.title}
-                <IoArrowUp size={20} className='absolute transition-all ease-in duration-100 top-0 right-0 m-1.5 group-hover/item:m-0 rotate-45' />
-              </p>
-              <p className='text-md dark:text-gray-50 opacity-75'>{project.company} · {project.date}</p>
-              <p className='text-md dark:text-gray-50 opacity-75'>{project.description}</p>
-            </div>
-          </motion.div>
+          <Link href={project.url} key={project.company}>
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 1.5 * (index / projects.length)}}    
+              className='group/item py-6 px-8 mb-2 w-full bg-gray-100 hover:bg-gray-200 dark:bg-[#0a182b] cursor-pointer rounded-lg' 
+            >
+              <div className='hover:!opacity-100 group-hover:opacity-50'>
+                <p className='relative inline-block pr-8 text-xl dark:text-gray-50 font-semibold'>
+                  {project.title}
+                  <IoArrowUp size={20} className='absolute transition-all ease-in duration-100 top-0 right-0 m-1.5 group-hover/item:m-0 rotate-45' />
+                </p>
+                <p className='text-md dark:text-gray-50 opacity-75'>{project.company} · {project.date}</p>
+                <p className='text-md dark:text-gray-50 opacity-75'>{project.description}</p>
+              </div>
+            </motion.div>
+          </Link>
         ))
       }
     </div>
