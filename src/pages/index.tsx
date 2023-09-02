@@ -3,44 +3,25 @@ import { useEffect, useState } from 'react'
 import { IoLogoGithub, IoArrowForward, IoLogoLinkedin } from 'react-icons/io5'
 import Link from 'next/link'
 import TypeWriter from '@/components/TypeWriter/TypeWriter'
+import { motion } from 'framer-motion'
+import Carousel from '@/components/Carousel/Carousel'
 
-const hats = [
-  { prep: '', suffix: 'Martin Tsang' },
-  { prep: 'a', suffix: 'a Software Engineer' },
+const names = [
+  { name: 'Martin Tsang' },
+  { name: 'a Software Engineer' },
+  { name: 'a Freelancer' },
 ]
 
 export default function Home() {
-  const [section, setSection] = useState('')
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('Martin Tsang');
-  const [isGoingBack, setIsGoingBack] = useState(false);
   const words = ['Martin Tsang', 'a Software Engineer'];
-  const word = words[currentWordIndex];
-
-  useEffect(() => {
-
-  }, []);
-
-  useEffect(() => {
-    setSection('EXPERIENCES')
-  }, [])
-
-  // const ListItem = ({ order, title }: ListItemProps) => (
-  //   <li 
-  //     className={`my-2 group/item flex items-center hover:!opacity-100 cursor-pointer ${title === section ? 'opacity-100' : 'opacity-50'}`} 
-  //     onClick={() => setSection(title)}>
-  //     <p className='text-sm dark:text-white'>{String(order).padStart(2, '0')}</p>
-  //     <div className='mx-4 transition-all w-[40px] group-hover/item:w-[80px] h-[1px] bg-black dark:bg-white'></div>
-  //     <p className='text-md dark:text-white font-semibold'>{title}</p>
-  //   </li>
-  // )
 
   return (
     <Container maxWidth='xl'>
-      <div className='lg:h-screen flex justify-center items-center'>
-        <div>
+      <section className='relative h-screen flex justify-center items-center'>
+        <div className='absolute top-1/3 left-1/2 -translate-x-1/6 -translate-y-1/2 w-[100px] h-[100px] rotate-[60deg] bg-sky-300 dark:bg-sky-500 rounded-full blur-2xl'/>
+        <div className='z-20'>
           <p className='mb-4 text-2xl text-center dark:text-white font-bold tracking-wider'>Welcome</p>
-          <TypeWriter appendClass="text-6xl" hats={hats} prefix='I am' />
+          <TypeWriter appendClass="text-6xl" names={names} prefix='I am' />
           <p className='mt-2 text-center dark:text-white opacity-75 leading-[1.5]'>
             {`Technology and design are the core of success for real estate related businesses.`}
           </p>
@@ -52,8 +33,20 @@ export default function Home() {
               <IoLogoLinkedin size={28} className='dark:text-gray-50' />
             </Link>
           </div>
+          <div className='mt-40 w-full flex justify-center'>
+            <a href="#my_work" className='flex justify-center w-10 h-16 border-2 border-black dark:border-white rounded-full'>
+              <motion.div
+                animate={{ y: [0, 44], opacity: [1, 0] }}
+                transition={{ ease: 'easeIn', repeat: Infinity, duration: 1, repeatDelay: 0.5 }}
+                className='w-4 h-4 bg-black dark:bg-white rounded-full'/>
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
+      <section id="my_work" className='pt-40 h-screen flex flex-col items-center'>
+        <p className='mb-6 text-xl text-center dark:text-white uppercase'>work</p>
+        <Carousel />
+      </section>
     </Container>
   )
 }

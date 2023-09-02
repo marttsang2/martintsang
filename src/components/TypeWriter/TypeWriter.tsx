@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react'
 
 type TypeWriterProps = {
   appendClass?: string,
-  hats: {
-    prep?: string,
-    suffix: string,
+  names: {
+    name: string,
   }[],
   prefix?: string,
 }
 
-export default function TypeWriter({ appendClass, hats, prefix }: TypeWriterProps) {
+export default function TypeWriter({ appendClass, names, prefix }: TypeWriterProps) {
   // Outer container base class + append custom class
   let className = "flex flex-col gap-4";
   if (appendClass) className += " " + appendClass;
 
   // Typewriter effect base class
-  const typeWriterClass = "font-bold text-5xl dark:text-white py-2 border-r-2 pr-1"
+  const typeWriterClass = "font-bold text-3xl md:text-5xl dark:text-white py-2 border-r-2 border-black dark:border-white pr-1"
         + "animate-cursor overflow-hidden whitespace-nowrap transition-[width] ease-in-out duration-1000 mr-auto";
 
   // State of current hat index
@@ -36,7 +35,7 @@ export default function TypeWriter({ appendClass, hats, prefix }: TypeWriterProp
                  */
         setCurrentHat(oldVal => {
           let hatIndex;
-          if (oldVal >= hats.length - 1) {
+          if (oldVal >= names.length - 1) {
             hatIndex = 0;
           } else {
             hatIndex = oldVal + 1;
@@ -59,12 +58,12 @@ export default function TypeWriter({ appendClass, hats, prefix }: TypeWriterProp
 
   return (
     <div className={className}>
-      <div className="flex gap-4 md:text-4xl mx-auto">
-        <div className="shrink-0 text-5xl dark:text-white py-2 font-bold whitespace-nowrap ml-auto">
+      <div className="flex gap-2 md:gap-4 md:text-4xl mx-auto">
+        <div className="shrink-0 text-3xl md:text-5xl dark:text-white py-2 font-bold whitespace-nowrap ml-auto">
           {prefix}
           {/* {hats[currentHat].prep ? ` ${hats[currentHat].prep} ` : ''} */}
         </div>
-        <div className={`${typeWriterClass}${collapseClass}`}>{hats[currentHat].suffix}</div>
+        <div className={`${typeWriterClass}${collapseClass}`}>{names[currentHat].name}</div>
       </div>
     </div>
   )
