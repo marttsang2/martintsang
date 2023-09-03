@@ -1,11 +1,12 @@
 type ContainerProps = {
     children: React.ReactNode;
-    maxWidth: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    maxWidth: 'sm' | 'md' | 'lg' | 'xl';
+    paddingX?: number;
 }
 
-const Container = ({ children, maxWidth }: ContainerProps) => {
+const Container = ({ children, maxWidth, paddingX }: ContainerProps) => {
   return (
-    <div className={`container mx-auto px-4 max-w-${maxWidth}`}>
+    <div className={'mx-auto max-w-7xl 2xl:w-4/5 w-11/12'}>
       {children}
     </div>
   )

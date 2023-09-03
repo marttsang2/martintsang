@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import Image from 'next/image';
 import Link from 'next/link';
 
 const works = [
-  { title: 'Jomud', image: '/work/jomud_demo.svg', date: '', description: '' },
-  { title: 'Superacc', image: '/work/superacc_demo.svg', date: '', description: '' },
-  { title: 'Polytasy', image: '/work/polytasy_logo.jpeg', date: '', description: '' },
+  { title: 'Jomud', image: '/work/jomud_demo.svg', date: 'June 2023', description: 'Website', link: '/work/jomud' },
+  { title: 'Superacc', image: '/work/superacc_demo.svg', date: 'June 2023', description: 'Website', link: '/work/superacc' },
+  { title: 'Polytasy', image: '/work/polytasy_logo.jpeg', date: 'June 2022', description: 'Game', link: '/work/polytasy' },
 ]
 
 const Carousel = () => {
@@ -26,19 +25,19 @@ const Carousel = () => {
     slides: {
       origin: "center",
       perView: 1,
-      spacing: 10,
+      spacing: 150,
     },
   })
 
   return (
     <div ref={sliderRef} className="keen-slider">
-      {works.map(({ title, image }, idx) => (
-        <Link key={idx} href="/" className="keen-slider__slide relative flex justify-center items-center h-[600px] rounded-xl group">
-          <Image className='transition-all group-hover:brightness-50 group-hover:blur group-hover:scale-125 duration-500 object-cover' src={image} alt='' fill />\
+      {works.map(({ title, date, description, image, link }, idx) => (
+        <Link key={idx} href={link} className="keen-slider__slide relative flex justify-center items-center h-[600px] rounded-xl group">
+          <Image className='transition-all group-hover:brightness-[.25] group-hover:blur group-hover:scale-110 duration-500 object-cover' src={image} alt='' fill />\
           <div className='z-10'>
-            <div className='invisible group-hover:visible'>
-              <p className='text-3xl text-white z-10'>{title}</p>
-            </div>
+            <p className='invisible group-hover:visible text-md text-white text-center uppercase z-10 mb-4'>{date}</p>
+            <p className='invisible group-hover:visible text-3xl text-white text-center font-bold duration-500 z-10 mb-4'>{title}</p>
+            <p className='invisible group-hover:visible text-md text-white text-center duration-500 z-10'>{description}</p>
           </div>
         </Link>
       ))}
