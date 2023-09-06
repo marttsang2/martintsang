@@ -7,7 +7,7 @@ function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [hasMounted, setHasMounted] = useState(false);
 
-  useEffect(() => setHasMounted(true));
+  useEffect(() => setHasMounted(true), []);
   
   // this line is the key to avoid the error.
   if (!hasMounted) return null;

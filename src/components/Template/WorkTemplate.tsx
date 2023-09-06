@@ -15,9 +15,9 @@ type WorkTemplateProps = {
 
 const WorkTemplate = ({ backdropImage, date, name, description, category, originLink }: WorkTemplateProps) => {
   return (
-    <Container maxWidth='xl'>
+    <>
       <div className='z-10'>
-        <Image className='absolute top-0 left-0 object-fill z-10' src={backdropImage} alt='backdrop' fill />
+        <Image className='absolute top-0 left-0 object-contain z-10' src={backdropImage} alt='backdrop' fill />
         <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-slate-50 to-[#ffffff6d] dark:from-slate-800 dark:to-[#000000d4] bg-opacity-50 z-10'></div>
       </div>
       <section className='relative h-screen pt-20 z-20'>
@@ -48,7 +48,7 @@ const WorkTemplate = ({ backdropImage, date, name, description, category, origin
           </Link>}
         </div>
       </section>
-    </Container>
+    </>
   )
 }
 
