@@ -1,4 +1,4 @@
-import { BlogPost } from "@/pages/types/BlogPost";
+import { BlogPost } from "@/types/BlogPost";
 import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
 export default class NotionService {
