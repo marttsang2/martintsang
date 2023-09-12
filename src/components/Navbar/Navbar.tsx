@@ -1,19 +1,26 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import ThemeToggle from '../Toggle/ThemeToggle'
 import { useMotionValueEvent, useScroll } from 'framer-motion'
 import { IoClose, IoMenuOutline } from 'react-icons/io5'
 
 const Navbar = () => {
-  const [showMobileMenu, setShowMobileMenu] = React.useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [hookedYPostion, setHookedYPosition] = useState(0);
+  const [hasMounted, setHasMounted] = useState(false);
+
   const { scrollYProgress } = useScroll()
-  const [hookedYPostion, setHookedYPosition] = React.useState(0);
+
+  useEffect(() => setHasMounted(true), []);
+
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     setHookedYPosition(latest);
   })
 
   const navClass = hookedYPostion === 0 ? 'w-[800px]' : 'w-full'
+
+  if (!hasMounted) return null;
 
   return (
     <>

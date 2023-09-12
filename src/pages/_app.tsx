@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       Router.events.off("routeChangeError", end);
     };
   }, []);
+  
   return (
     <>
       {loading ? (
