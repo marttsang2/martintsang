@@ -39,7 +39,7 @@ const WorkTemplate = ({ backdropImage, date, name, description, category, origin
           <p className='text-7xl font-bold my-4'>{name}</p>
           <p className='text-gray-300 mb-8'>{description}</p>
           <p>{category}</p>
-          <div className='w-full h-[1px] bg-gradient-to-r from-white to-transparent my-4'></div>
+          <div className='w-full h-[1px] bg-gradient-to-r from-black dark:from-white to-transparent my-4'></div>
           {originLink !== '' && 
           <Link
             href={originLink}
