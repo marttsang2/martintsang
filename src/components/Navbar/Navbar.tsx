@@ -28,7 +28,7 @@ const Navbar = () => {
         <div className='fixed top-0 left-0 h-screen w-screen flex justify-center items-center flex-col bg-white dark:bg-[#27374D] gap-4 z-40'>
           <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/'>Home</Link>
           <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/#my_work'>Work</Link>
-          <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/blog'>Blog</Link>
+          {/* <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/blog'>Blog</Link> */}
           <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/Martin_Tsang_Resume.pdf' target="_blank" rel="noopener noreferrer">Resume</Link>
         </div>
       )}
@@ -41,7 +41,7 @@ const Navbar = () => {
             <div className='invisible lg:visible group group/list transition-all flex dark:text-white'>
               <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/'>Home</Link>
               <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/#my_work'>Work</Link>
-              <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/blog'>Blog</Link>
+              {/* <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/blog'>Blog</Link> */}
               <Link className='text-md p-1.5 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md' href='/Martin_Tsang_Resume.pdf' target="_blank" rel="noopener noreferrer">Resume</Link>
               <ThemeToggle />
             </div>
