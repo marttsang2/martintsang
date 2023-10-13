@@ -51,12 +51,12 @@ const ExperienceSection = () => {
     <motion.ul className='group'>
       {
         experiences.map((experience, index) => (
-          <Link href={experience.url} key={experience.company}>
+          <Link href={experience.url} target="_blank" key={experience.company}>
             <motion.div 
               initial={{ opacity: 0, y: -10 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 1 * (index / experiences.length)}}  
-              className='group/item py-6 px-8 mb-2 w-full bg-gray-100 hover:bg-gray-200 dark:bg-[#0a182b] cursor-pointer rounded-lg' 
+              className='group/item py-6 px-8 mb-2 w-full bg-gray-100 hover:bg-gray-600 hover:text-white dark:bg-[#0a182b] cursor-pointer rounded-lg' 
               key={experience.company}
             >
               <div className='hover:!opacity-100 group-hover:opacity-50'>

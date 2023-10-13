@@ -6,7 +6,7 @@ type ContainerProps = {
 
 const Container = ({ children, maxWidth, paddingX }: ContainerProps) => {
   return (
-    <div className={'mx-auto max-w-7xl 2xl:w-4/5 w-11/12'}>
+    <div className={'mx-auto max-w-5xl 2xl:w-4/5 w-11/12'}>
       {children}
     </div>
   )

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Inter', sans-serif;
   transition: background-color 0.2s ease;
   scroll-behavior: smooth;
 }
