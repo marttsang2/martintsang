@@ -7,8 +7,7 @@ import { useRouter } from 'next/router'
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  console.log(router);
-  if(router.pathname === '/_error') return <Component {...pageProps} />;
+  if(['404'].some((errorCode) => router.pathname.includes(errorCode))) return <Component {...pageProps} />;
 
   return (
     <ThemeProvider attribute='class' defaultTheme='light'>
