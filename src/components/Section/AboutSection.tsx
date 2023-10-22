@@ -19,8 +19,8 @@ type SkillSectionProps = {
 
 const SkillSection = ({ title, skills }: SkillSectionProps) => {
   return (
-    <div className='flex items-center gap-4'>
-      <h1 className='text-sm w-44 border-r-[1px] border-gray-400'>{title}</h1>
+    <div className='flex flex-col md:flex-row md:items-center gap-4'>
+      <h1 className='text-sm w-44'>{title}</h1>
       <div className='flex gap-2'>
         {skills.map((skill) => (
           <SkillTag label={skill} key={skill} />
@@ -33,7 +33,7 @@ const SkillSection = ({ title, skills }: SkillSectionProps) => {
 const AboutSection = () => {
   return (
     <Section id='about'>
-      <div className='relative grid grid-cols-1 lg:grid-cols-2 gap-4 h-[90vh] items-center'>
+      <div className='relative grid grid-cols-1 lg:grid-cols-2 gap-4 items-center'>
         <div className='w-full flex justify-center'>
           <Image src="/selfie.svg" alt="hero" width={600} height={500} />
         </div>
