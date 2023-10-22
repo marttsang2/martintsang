@@ -6,7 +6,7 @@ import HomeSection from '@/components/Section/HomeSection'
 
 export default function Home() {
   return (
-    <Container maxWidth='xl'>
+    <Container maxWidth='5xl'>
       <HomeSection />
       <AboutSection />
       <ProfileSection />

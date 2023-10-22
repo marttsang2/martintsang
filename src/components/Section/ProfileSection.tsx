@@ -1,6 +1,7 @@
 import React from 'react'
 import Section from './Section'
-import { educations, experiences } from '@/constants/profile'
+import experiences from '@/constants/experiences.json'
+import educations from '@/constants/educations.json'
 
 const ExperienceSection = () => {
   return (
