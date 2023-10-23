@@ -33,7 +33,7 @@ const SkillSection = ({ title, skills }: SkillSectionProps) => {
 const AboutSection = () => {
   return (
     <Section id='about'>
-      <div className='relative grid grid-cols-1 lg:grid-cols-2 gap-4 items-center'>
+      <div className='relative grid grid-cols-1 lg:grid-cols-2 gap-4 items-center min-h-[90vh]'>
         <div className='w-full flex justify-center'>
           <Image src="/selfie.svg" alt="hero" width={600} height={500} />
         </div>
