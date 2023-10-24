@@ -27,7 +27,15 @@ const Navbar = () => {
   return (
     <>
       {showMobileMenu && (
-        <div className='fixed top-0 left-0 h-screen w-screen flex justify-center items-center flex-col bg-white dark:bg-[#27374D] gap-4 z-40'>
+        <div className='fixed top-0 left-0 h-screen w-screen flex justify-center items-center flex-col bg-white dark:bg-[#27374D] gap-4 z-50'>
+          <div className='absolute top-4 right-8 flex items-center'>
+            <button
+              className="relative p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md inline-flex items-center cursor-pointer"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+            >
+              <IoClose size={20} />
+            </button>
+          </div>
           <NavButton id='home' label='Home' />
           <NavButton id='about' label='About' />
           <NavButton id='profile' label='Profile' />
