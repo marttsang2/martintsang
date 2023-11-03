@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import Head from 'next/head'
 import Layout from '@/components/Layout/Layout'
 import { useRouter } from 'next/router'
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </div>
     </ThemeProvider>
