@@ -17,7 +17,7 @@ const HomeSection = () => {
         <div className='flex flex-col items-center gap-4 text-center lg:text-start'>
           <p className='text-6xl dark:text-white font-bold tracking-wider self-start whitespace-nowrap'>Martin Tsang</p>
           <p className='text-2xl dark:text-white font-bold tracking-wider lg:self-start'>{`I'm Software Engineer`}</p>
-          <Link href='/Martin_Tsang_Resume.pdf' target="_blank" className='w-fit mt-4 flex items-center self-center lg:self-start gap-2 p-2 px-4 bg-gray-200 hover:bg-gray-600 hover:text-white rounded-md'>
+          <Link href='/resume.pdf' target="_blank" className='w-fit mt-4 flex items-center self-center lg:self-start gap-2 p-2 px-4 bg-gray-200 hover:bg-gray-600 hover:text-white rounded-md'>
             <p>View Resume</p>
             <IoArrowForward />
           </Link>
