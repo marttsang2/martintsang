@@ -26,7 +26,7 @@ export default function InfoCard() {
       </div>
       <div className="flex gap-4">
         <a
-          href="https://github.com/martintsangxd"
+          href="https://github.com/marttsang2"
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-lg bg-black text-white hover:bg-yellow-300 transition-colors"
@@ -34,7 +34,7 @@ export default function InfoCard() {
           <Github />
         </a>
         <a
-          href="https://linkedin.com/in/martintsangxd"
+          href="https://linkedin.com/in/marttsang2"
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-lg bg-black text-white hover:bg-yellow-300 transition-colors"
