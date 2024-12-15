@@ -11,7 +11,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Typography variant="h1" className="font-thin text-center text-8xl">
+        <Typography variant="h1" className="font-thin text-center text-6xl lg:text-8xl">
           Develop
           <br />
           <span className="text-yellow-300">Experience</span>
@@ -23,7 +23,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <Typography variant="p" className="text-center text-xl text-neutral-400">
+        <Typography variant="p" className="text-center text-md lg:text-xl text-neutral-400">
           Martin Tsang - Software Engineer located in Toronto, Canada
           <br />
           Passionate for building custom software solutions for businesses.
@@ -34,7 +34,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="absolute bottom-[10rem] animate-bounce cursor-pointer"
+        className="mt-10 animate-bounce cursor-pointer"
         onClick={() => {
             const element = document.getElementById('about');
             if (element) {
