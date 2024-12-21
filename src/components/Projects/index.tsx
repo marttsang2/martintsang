@@ -82,7 +82,7 @@ export default function Projects() {
       description: "An AI-powered job search platform that streamlines the application process and matches candidates with ideal opportunities.",
       image: "/projects/jomud.png",
       technologies: ["Next.js", "Java Spring Boot", "PostgreSQL", "AWS"],
-      link: "https://jomud.com"
+      link: "https://jomud.io"
     },
     // Add more projects as needed
   ];
