@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Lines from "@/components/Lines";
 import Footer from "@/components/Footer";
 
 const geistSans = Geist({
@@ -16,8 +15,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Martin Tsang - Software Engineer",
-  description: "Martin Tsang - Software Engineer located in Toronto, Canada",
+  title: "Martin Tsang — Software Engineer",
+  description:
+    "Software engineer in Toronto building production web platforms across booking, legal, and AI domains.",
+  metadataBase: new URL("https://martintsang.com"),
+  openGraph: {
+    title: "Martin Tsang — Software Engineer",
+    description:
+      "Software engineer in Toronto building production web platforms across booking, legal, and AI domains.",
+    type: "website",
+    locale: "en_CA",
+  },
 };
 
 export default function RootLayout({
@@ -26,19 +34,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
-      </head>
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
-        <Lines />
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute inset-0 grid-bg radial-fade opacity-60" />
+          <div className="absolute inset-x-0 top-0 h-[40vh] bg-gradient-to-b from-yellow-300/[0.06] via-transparent to-transparent" />
+        </div>
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
