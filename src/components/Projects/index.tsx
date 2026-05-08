@@ -1,197 +1,285 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import SectionHeading from "@/components/ui/SectionHeading";
+import { useState } from "react";
 
-interface ProjectProps {
-  title: string;
-  role: string;
-  year: string;
-  description: string;
-  highlights: string[];
-  technologies: string[];
-  image?: string;
-  fallbackInitials: string;
-  fallbackGradient: string;
-  link: string;
-  linkLabel: string;
-}
-
-const projects: ProjectProps[] = [
-  {
-    title: "GoPlace",
-    role: "Lead Engineer",
-    year: "2024 — Present",
-    description:
-      "Multi-tenant booking platform for spas and wellness studios. Powers staff scheduling, customer bookings, and admin operations for live businesses in the GTA.",
-    highlights: [
-      "Designed event-driven domain model unifying bookings, breaks, and vacations on one entity",
-      "Implemented JWT auth with refresh-token queueing and action-keyed RBAC",
-      "Deployed Spring Boot + dual React apps on AWS EKS via CodeBuild → ECR pipelines",
-    ],
-    technologies: ["Spring Boot", "Java 21", "PostgreSQL", "React", "Vite", "AWS EKS", "Flyway"],
-    image: "/projects/goplace.png",
-    fallbackInitials: "GP",
-    fallbackGradient: "from-yellow-300/30 via-orange-400/20 to-rose-400/10",
-    link: "https://booking.goplace.com",
-    linkLabel: "booking.goplace.com",
-  },
-  {
-    title: "WP Legal & Notary Public",
-    role: "Full-Stack Developer",
-    year: "2024",
-    description:
-      "Multi-language marketing site for a Toronto legal and notary firm. Bilingual content, SEO-tuned, integrated with Resend for lead capture and Telegram for instant notifications.",
-    highlights: [
-      "Bilingual EN/ZH content via next-intl with MDX-driven articles",
-      "Schema.org structured data and Google Analytics for SEO performance",
-      "Lead form → Resend email + Telegram bot for real-time alerts",
-    ],
-    technologies: ["Next.js", "TypeScript", "Tailwind", "next-intl", "Resend", "Vercel"],
-    image: "/projects/wplegal.png",
-    fallbackInitials: "WP",
-    fallbackGradient: "from-blue-400/30 via-indigo-400/20 to-violet-400/10",
-    link: "https://wplegal.ca",
-    linkLabel: "wplegal.ca",
-  },
-  {
-    title: "Help Me Clean",
-    role: "Full-Stack Developer",
-    year: "2024",
-    description:
-      "Marketing site for a GTA cleaning company serving medical, industrial, and food-processing facilities. Multi-language, SEO-first, with an automated PDF intro generator for B2B outreach.",
-    highlights: [
-      "Custom PDF generation pipeline with PDFKit for branded sales collateral",
-      "next-intl + MDX for service pages across multiple languages",
-      "Vercel Analytics + Speed Insights to monitor Core Web Vitals",
-    ],
-    technologies: ["Next.js", "TypeScript", "Tailwind", "PDFKit", "next-intl", "Resend"],
-    image: "/projects/helpmeclean.png",
-    fallbackInitials: "HMC",
-    fallbackGradient: "from-emerald-300/30 via-teal-400/20 to-cyan-400/10",
-    link: "https://helpmeclean.ca",
-    linkLabel: "helpmeclean.ca",
-  },
-  {
-    title: "Jomud",
-    role: "Founding Engineer",
-    year: "2023",
-    description:
-      "AI-powered job search platform that matches candidates with roles and streamlines applications. Built the resume builder tool that boosted ATS scan success by 30%.",
-    highlights: [
-      "Resume builder generating ATS-optimized PDFs from structured data",
-      "Spring Boot service layer with PostgreSQL, deployed on AWS",
-      "Next.js frontend with server-rendered job listings and search",
-    ],
-    technologies: ["Next.js", "Spring Boot", "PostgreSQL", "AWS", "TypeScript"],
-    image: "/projects/jomud.png",
-    fallbackInitials: "JM",
-    fallbackGradient: "from-fuchsia-400/30 via-pink-400/20 to-rose-400/10",
-    link: "https://jomud.io",
-    linkLabel: "jomud.io",
-  },
-];
-
-const ProjectCard = ({ project, index }: { project: ProjectProps; index: number }) => {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-yellow-300/30"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-[1.1fr,1fr]">
-        <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[340px]">
-          {project.image ? (
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          ) : (
-            <div
-              className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${project.fallbackGradient}`}
-            >
-              <span className="font-mono text-7xl font-light tracking-tight text-white/80">
-                {project.fallbackInitials}
-              </span>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        </div>
-
-        <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-baseline justify-between gap-4">
-              <h3 className="text-2xl font-medium tracking-tight text-white sm:text-3xl">
-                {project.title}
-              </h3>
-              <span className="font-mono text-xs text-neutral-500">{project.year}</span>
-            </div>
-            <span className="text-sm text-yellow-300">{project.role}</span>
-            <p className="text-sm leading-relaxed text-neutral-400">
-              {project.description}
-            </p>
-            <ul className="mt-2 flex flex-col gap-2">
-              {project.highlights.map((h) => (
-                <li
-                  key={h}
-                  className="flex gap-2 text-sm leading-relaxed text-neutral-400"
-                >
-                  <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-yellow-300" />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-1.5">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-xs text-neutral-300"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-fit items-center gap-1.5 text-sm text-white transition-colors hover:text-yellow-300"
-            >
-              {project.linkLabel}
-              <ArrowUpRight
-                size={14}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
-    </motion.article>
-  );
-};
+const tabs = ["GoPlace", "WP Legal", "Help Me Clean", "Jomud"];
 
 export default function Projects() {
+  const [active, setActive] = useState(0);
+
   return (
-    <section id="projects" className="scroll-mt-24 py-24 sm:py-32">
-      <SectionHeading
-        eyebrow="02 / Selected work"
-        title="Recent projects"
-        description="A small selection of production systems I&apos;ve designed and shipped over the past two years."
-      />
-      <div className="mt-12 flex flex-col gap-6">
-        {projects.map((project, i) => (
-          <ProjectCard key={project.title} project={project} index={i} />
-        ))}
+    <section id="projects" className="projects">
+      <div className="container-wide">
+        <div className="projects-head">
+          <div>
+            <span className="section-eyebrow">
+              <span className="sq"></span>Selected work
+            </span>
+            <h2 className="section-title">Recent projects, end to end.</h2>
+          </div>
+          <p>
+            Four production systems shipped over the past two years, spanning multi-tenant SaaS, marketing
+            funnels, and AI-powered tools. Tap a tab to dig in.
+          </p>
+        </div>
+
+        <div className="proj-tabs" role="tablist">
+          {tabs.map((label, i) => (
+            <button
+              key={i}
+              className={`proj-tab ${active === i ? "active" : ""}`}
+              onClick={() => setActive(i)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div className="proj-panels">
+          {/* PANEL 0 — GoPlace */}
+          <div className={`proj-panel ${active === 0 ? "active" : ""}`}>
+            <div className="proj-art">
+              <div className="stripe"></div>
+              <span className="meta">SaaS · 2024 — present</span>
+              <div className="product-frame">
+                <div className="pf-bar">
+                  <span className="pf-dot"></span><span className="pf-dot"></span><span className="pf-dot"></span>
+                  <span className="pf-title">app.goplace.com / staff schedule</span>
+                </div>
+                <div className="pf-body">
+                  <div className="pf-row">
+                    <span className="pf-pill short" style={{ background: "var(--ink)", height: 24, borderRadius: 6 }}></span>
+                    <span className="pf-pill"></span>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "60px repeat(7, 1fr)", gap: 4, marginTop: 6 }}>
+                    <div style={{ fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 10, color: "var(--muted)" }}>9 AM</div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--cream-2)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--rust)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--cream-2)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 10, color: "var(--muted)" }}>11 AM</div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--cream-2)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--rust)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 10, color: "var(--muted)" }}>1 PM</div>
+                    <div style={{ background: "var(--cream-2)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--cream-2)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                    <div style={{ background: "var(--moss)", borderRadius: 3, height: 18 }}></div>
+                  </div>
+                  <div style={{ marginTop: "auto" }}>
+                    <div className="pf-pill"></div>
+                    <div className="pf-pill short" style={{ marginTop: 6 }}></div>
+                  </div>
+                </div>
+              </div>
+              <span className="url">booking.goplace.com</span>
+            </div>
+            <div className="proj-body">
+              <span className="proj-tag">01 / Lead engineer · 2024 — present</span>
+              <h3>GoPlace</h3>
+              <p>
+                Multi-tenant booking platform for spas and wellness studios across the GTA. Powers
+                staff scheduling, customer bookings, and admin operations for live businesses today.
+              </p>
+              <ul className="proj-bullets">
+                <li>Designed an event-driven domain model unifying bookings, breaks, and vacations on one entity</li>
+                <li>JWT auth with refresh-token queueing and action-keyed RBAC across tenants</li>
+                <li>Spring Boot + dual React apps deployed on AWS EKS via CodeBuild → ECR pipelines</li>
+                <li>Flyway migrations, Postgres row-level security, structured Logback to CloudWatch</li>
+              </ul>
+              <div className="proj-stack">
+                <span className="stack-tag">Spring Boot</span>
+                <span className="stack-tag">Java 21</span>
+                <span className="stack-tag">PostgreSQL</span>
+                <span className="stack-tag">React</span>
+                <span className="stack-tag">Vite</span>
+                <span className="stack-tag">AWS EKS</span>
+                <span className="stack-tag">Flyway</span>
+              </div>
+            </div>
+          </div>
+
+          {/* PANEL 1 — WP Legal */}
+          <div className={`proj-panel ${active === 1 ? "active" : ""}`}>
+            <div className="proj-art">
+              <div className="stripe" style={{ background: "repeating-linear-gradient(45deg,rgba(92,123,181,0.08) 0 1px,transparent 1px 18px),linear-gradient(180deg,#DEE3EE,#C8D2E0)" }}></div>
+              <span className="meta">Marketing · 2024</span>
+              <div className="product-frame">
+                <div className="pf-bar">
+                  <span className="pf-dot"></span><span className="pf-dot"></span><span className="pf-dot"></span>
+                  <span className="pf-title">wplegal.ca</span>
+                </div>
+                <div className="pf-body" style={{ padding: 24 }}>
+                  <div style={{ height: 18, width: "60%", background: "var(--ink)", borderRadius: 4 }}></div>
+                  <div style={{ height: 8, width: "80%", background: "var(--cream-2)", borderRadius: 3, marginTop: 10 }}></div>
+                  <div style={{ height: 8, width: "75%", background: "var(--cream-2)", borderRadius: 3, marginTop: 6 }}></div>
+                  <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
+                    <div style={{ height: 30, flex: 1, background: "var(--ink)", borderRadius: 6 }}></div>
+                    <div style={{ height: 30, flex: 1, background: "transparent", border: "1px solid var(--line)", borderRadius: 6 }}></div>
+                  </div>
+                  <div style={{ marginTop: 18, fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 9, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Services</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
+                    {[0, 1, 2, 3].map((i) => (
+                      <div key={i} style={{ aspectRatio: "1.6", background: "var(--cream-2)", borderRadius: 6, padding: 8 }}>
+                        <div style={{ height: 6, width: "60%", background: "var(--ink)", borderRadius: 2 }}></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <span className="url">wplegal.ca</span>
+            </div>
+            <div className="proj-body">
+              <span className="proj-tag">02 / Full-stack developer · 2024</span>
+              <h3>WP Legal &amp; Notary Public</h3>
+              <p>
+                Multi-language marketing site for a Toronto legal and notary firm. Bilingual (EN/ZH)
+                content, SEO-tuned, integrated with Resend for lead capture and Telegram for instant
+                notifications.
+              </p>
+              <ul className="proj-bullets">
+                <li>Bilingual EN/ZH content via next-intl with MDX-driven articles</li>
+                <li>Schema.org structured data and Google Analytics for SEO performance</li>
+                <li>Lead form → Resend email + Telegram bot for &lt;60s response</li>
+                <li>98 / 100 Lighthouse performance on mobile</li>
+              </ul>
+              <div className="proj-stack">
+                <span className="stack-tag">Next.js</span>
+                <span className="stack-tag">TypeScript</span>
+                <span className="stack-tag">Tailwind</span>
+                <span className="stack-tag">next-intl</span>
+                <span className="stack-tag">Resend</span>
+                <span className="stack-tag">Vercel</span>
+              </div>
+            </div>
+          </div>
+
+          {/* PANEL 2 — Help Me Clean */}
+          <div className={`proj-panel ${active === 2 ? "active" : ""}`}>
+            <div className="proj-art">
+              <div className="stripe" style={{ background: "repeating-linear-gradient(135deg,rgba(31,58,42,0.06) 0 1px,transparent 1px 22px),linear-gradient(180deg,#E0E6DB,#CDD5C0)" }}></div>
+              <span className="meta">Marketing · B2B · 2024</span>
+              <div className="product-frame">
+                <div className="pf-bar">
+                  <span className="pf-dot"></span><span className="pf-dot"></span><span className="pf-dot"></span>
+                  <span className="pf-title">helpmeclean.ca / pdf-generator</span>
+                </div>
+                <div className="pf-body" style={{ padding: 18, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 9, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Build PDF</div>
+                    <div style={{ height: 24, background: "var(--cream-2)", borderRadius: 6 }}></div>
+                    <div style={{ height: 24, background: "var(--cream-2)", borderRadius: 6 }}></div>
+                    <div style={{ height: 24, background: "var(--cream-2)", borderRadius: 6 }}></div>
+                    <div style={{ height: 24, background: "var(--ink)", borderRadius: 6, marginTop: "auto" }}></div>
+                  </div>
+                  <div style={{ background: "var(--cream)", border: "1px solid var(--line)", borderRadius: 6, padding: 12, display: "flex", flexDirection: "column", gap: 6 }}>
+                    <div style={{ height: 10, width: "80%", background: "var(--ink)", borderRadius: 2 }}></div>
+                    <div style={{ height: 6, width: "60%", background: "var(--cream-3)", borderRadius: 2 }}></div>
+                    <div style={{ height: 1, background: "var(--line)", margin: "6px 0" }}></div>
+                    <div style={{ height: 5, width: "90%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "85%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "80%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "70%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "90%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ marginTop: "auto", fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 8, color: "var(--muted)" }}>helpmeclean.ca · 1/2</div>
+                  </div>
+                </div>
+              </div>
+              <span className="url">helpmeclean.ca</span>
+            </div>
+            <div className="proj-body">
+              <span className="proj-tag">03 / Full-stack developer · 2024</span>
+              <h3>Help Me Clean</h3>
+              <p>
+                Marketing site for a GTA cleaning company serving medical, industrial, and food-processing
+                facilities. Multi-language, SEO-first, with an automated PDF intro generator for B2B
+                outreach.
+              </p>
+              <ul className="proj-bullets">
+                <li>Custom PDF generation pipeline with PDFKit for branded sales collateral</li>
+                <li>next-intl + MDX for service pages across multiple languages</li>
+                <li>Vercel Analytics + Speed Insights monitoring Core Web Vitals</li>
+                <li>40% lift in inbound demo bookings vs. legacy site</li>
+              </ul>
+              <div className="proj-stack">
+                <span className="stack-tag">Next.js</span>
+                <span className="stack-tag">TypeScript</span>
+                <span className="stack-tag">Tailwind</span>
+                <span className="stack-tag">PDFKit</span>
+                <span className="stack-tag">next-intl</span>
+                <span className="stack-tag">Resend</span>
+              </div>
+            </div>
+          </div>
+
+          {/* PANEL 3 — Jomud */}
+          <div className={`proj-panel ${active === 3 ? "active" : ""}`}>
+            <div className="proj-art">
+              <div className="stripe" style={{ background: "repeating-linear-gradient(90deg,rgba(201,90,44,0.06) 0 1px,transparent 1px 14px),linear-gradient(180deg,#ECE0D2,#DBC9B5)" }}></div>
+              <span className="meta">AI · 2023</span>
+              <div className="product-frame">
+                <div className="pf-bar">
+                  <span className="pf-dot"></span><span className="pf-dot"></span><span className="pf-dot"></span>
+                  <span className="pf-title">jomud.io / resume builder</span>
+                </div>
+                <div className="pf-body" style={{ padding: 14, display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 10 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                    <div style={{ fontFamily: "var(--font-dm-mono),'DM Mono',monospace", fontSize: 9, color: "var(--muted)", textTransform: "uppercase" }}>Sections</div>
+                    <div style={{ height: 18, background: "var(--ink)", borderRadius: 4 }}></div>
+                    <div style={{ height: 18, background: "var(--cream-2)", borderRadius: 4 }}></div>
+                    <div style={{ height: 18, background: "var(--cream-2)", borderRadius: 4 }}></div>
+                    <div style={{ height: 18, background: "var(--cream-2)", borderRadius: 4 }}></div>
+                    <div style={{ height: 18, background: "var(--cream-2)", borderRadius: 4 }}></div>
+                  </div>
+                  <div style={{ background: "var(--cream)", border: "1px solid var(--line)", borderRadius: 6, padding: 10, display: "flex", flexDirection: "column", gap: 5 }}>
+                    <div style={{ height: 10, width: "70%", background: "var(--ink)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "90%", background: "var(--cream-3)", borderRadius: 2 }}></div>
+                    <div style={{ height: 1, background: "var(--line)", margin: "4px 0" }}></div>
+                    <div style={{ height: 6, width: "40%", background: "var(--rust)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "90%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "80%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 6, width: "40%", background: "var(--rust)", borderRadius: 2, marginTop: 4 }}></div>
+                    <div style={{ height: 5, width: "88%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                    <div style={{ height: 5, width: "72%", background: "var(--cream-2)", borderRadius: 2 }}></div>
+                  </div>
+                </div>
+              </div>
+              <span className="url">jomud.io</span>
+            </div>
+            <div className="proj-body">
+              <span className="proj-tag">04 / Founding engineer · 2023</span>
+              <h3>Jomud</h3>
+              <p>
+                AI-powered job search platform that matches candidates with roles and streamlines
+                applications. Built the resume builder tool that boosted ATS scan-success by 30%.
+              </p>
+              <ul className="proj-bullets">
+                <li>Resume builder generating ATS-optimized PDFs from structured data</li>
+                <li>Spring Boot service layer with PostgreSQL, deployed on AWS</li>
+                <li>Next.js frontend with server-rendered job listings and search</li>
+                <li>14k+ resumes generated to date, P95 latency 2.1s</li>
+              </ul>
+              <div className="proj-stack">
+                <span className="stack-tag">Next.js</span>
+                <span className="stack-tag">Spring Boot</span>
+                <span className="stack-tag">PostgreSQL</span>
+                <span className="stack-tag">AWS</span>
+                <span className="stack-tag">TypeScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

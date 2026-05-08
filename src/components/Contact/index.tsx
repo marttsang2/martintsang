@@ -1,60 +1,38 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
-
 export default function Contact() {
   return (
-    <section id="contact" className="scroll-mt-24 py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5 }}
-        className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-yellow-300/[0.06] via-white/[0.02] to-transparent p-8 sm:p-12 lg:p-16"
-      >
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-yellow-300">
-          05 / Contact
+    <section id="contact" className="final-cta">
+      <div className="container-wide">
+        <span className="float-glyph fg-1">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect x="2" y="2" width="32" height="32" stroke="currentColor" strokeWidth="1"></rect>
+          </svg>
         </span>
-        <h2 className="mt-4 max-w-2xl text-balance text-3xl font-medium tracking-tight text-white sm:text-5xl">
+        <span className="float-glyph fg-2">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="1"></circle>
+          </svg>
+        </span>
+        <span className="float-glyph fg-3">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M2 16L16 2L30 16L16 30Z" stroke="currentColor" strokeWidth="1"></path>
+          </svg>
+        </span>
+
+        <h2>
           Have a project in mind?
           <br />
-          <span className="text-neutral-500">Let&apos;s build it.</span>
+          <em>Let&apos;s build it.</em>
         </h2>
-        <p className="mt-6 max-w-xl text-balance text-base text-neutral-400">
-          I&apos;m taking on a small number of new freelance and contract projects
-          this year. The fastest way to reach me is email.
-        </p>
-
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <a
-            href="mailto:tsangmartin1225@gmail.com"
-            className="inline-flex items-center gap-2 rounded-full bg-yellow-300 px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-yellow-200"
-          >
-            <Mail size={16} />
-            tsangmartin1225@gmail.com
-            <ArrowUpRight size={14} />
+        <p>Fast to onboard. Easy to work with. Built to scale with you.</p>
+        <div className="actions">
+          <a href="mailto:tsangmartin1225@gmail.com" className="btn btn-primary">
+            tsangmartin1225@gmail.com <span className="arrow">→</span>
           </a>
-          <a
-            href="https://github.com/marttsang2"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-white/[0.06]"
-          >
-            <Github size={16} />
-            GitHub
-          </a>
-          <a
-            href="https://linkedin.com/in/marttsang2"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-white/[0.06]"
-          >
-            <Linkedin size={16} />
+          <a href="https://linkedin.com/in/marttsang2" className="btn btn-ghost">
             LinkedIn
           </a>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

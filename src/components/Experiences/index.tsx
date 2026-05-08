@@ -1,139 +1,135 @@
 "use client";
 
-import { motion } from "framer-motion";
-import SectionHeading from "@/components/ui/SectionHeading";
+import { useState } from "react";
 
-interface ExperienceProps {
-  company: string;
-  position: string;
-  duration: string;
-  location?: string;
-  description: string[];
-  technologies: string[];
-}
-
-const experiences: ExperienceProps[] = [
+const tabs = [
   {
-    company: "Asynk",
-    position: "Software Developer",
-    duration: "Feb 2023 — Present",
-    location: "Remote",
-    description: [
-      "Built a career development platform with Next.js and TypeScript from scratch alongside a team of 5",
-      "Led a new hire in shipping a resume builder service in Node.js, lifting ATS scan success by 30%",
-      "Owned deployment of frontend and backend services to AWS EKS via ECR pipelines",
-    ],
-    technologies: ["Next.js", "TypeScript", "Node.js", "AWS", "Kubernetes"],
+    num: "01",
+    name: "Discovery",
+    eyebrow: "01 / Discovery",
+    title: "Find the smallest thing worth shipping.",
+    body: "One week. We dig into the actual problem — the spreadsheets people are tired of, the metric the CEO is anxious about — and define a v1 you can ship in 60 days, not 12 months.",
+    badge: "Workshop · 5 days",
+    badgeStyle: {},
+    glyphStyle: {},
+    artStyle: {},
+    link: "Start a discovery sprint",
   },
   {
-    company: "Ace Innovation Limited",
-    position: "Software Developer",
-    duration: "Jan 2024 — May 2024",
-    location: "Hong Kong",
-    description: [
-      "Developed a game provider service in Java / Spring Boot / OracleDB, contributing to higher customer retention",
-      "Integrated Jumio KYC identity verification and Google Address Validation into the user onboarding service",
-    ],
-    technologies: ["Java", "Spring Boot", "Oracle", "Jumio KYC"],
+    num: "02",
+    name: "Architecture",
+    eyebrow: "02 / Architecture",
+    title: "Pragmatic stack choices that age well.",
+    body: "Postgres over exotic DBs. Spring Boot or Node where it pays off. React + Tailwind on the frontend. Kubernetes only when you need it. No resume-driven engineering.",
+    badge: "ADRs delivered",
+    badgeStyle: {},
+    glyphStyle: { borderStyle: "dashed" as const },
+    artStyle: {
+      background:
+        "repeating-linear-gradient(45deg,rgba(14,15,14,0.06) 0 1px,transparent 1px 18px),linear-gradient(180deg,var(--cream-2),var(--cream-3))",
+    },
+    link: "Review your architecture",
   },
   {
-    company: "Apoidea",
-    position: "Software Engineer",
-    duration: "Mar 2022 — Jan 2024",
-    location: "Hong Kong",
-    description: [
-      "Built a generic financial analysis report-generation module powering downstream data manipulation",
-      "Shipped a Node.js microservice handling PDF-based integrations across multiple data pipelines",
-      "Used MongoDB to manage data flowing from ML models, improving data lifecycle handling",
-    ],
-    technologies: ["Node.js", "MongoDB", "Microservices"],
+    num: "03",
+    name: "Build & ship",
+    eyebrow: "03 / Build & ship",
+    title: "Daily progress in your Slack, weekly demos in your Zoom.",
+    body: "You see what I'm shipping every day. Branch deploys for every PR. Real domain on day one. The first user can sign up before the design is finished.",
+    badge: "CI on every push",
+    badgeStyle: {},
+    glyphStyle: {
+      background: "linear-gradient(135deg,var(--cream),var(--cream-3))",
+    },
+    artStyle: {},
+    link: "Start building",
   },
   {
-    company: "P L Technology Limited",
-    position: "Software Engineer",
-    duration: "Jan 2021 — Feb 2022",
-    location: "Hong Kong",
-    description: [
-      "Automated digital marketing data extraction with Selenium crawlers, eliminating 2 manual roles",
-      "Iterated on a loan website using React and Django alongside a team of 5 engineers",
-      "Revamped 200+ test cases, raising coverage by 40% and cutting post-deploy issues by 60%",
-    ],
-    technologies: ["React", "Django", "Selenium", "Python"],
+    num: "04",
+    name: "Operate",
+    eyebrow: "04 / Operate",
+    title: "I stay on through GA, then hand off cleanly.",
+    body: "30 days of post-launch support included. Runbooks, dashboards, and on-call playbook written for whoever inherits it — usually your in-house team or a junior I've coached.",
+    badge: "SLO 99.9%",
+    badgeStyle: { background: "var(--moss)", color: "var(--cream)" },
+    glyphStyle: {},
+    artStyle: {
+      background:
+        "repeating-linear-gradient(0deg,rgba(31,58,42,0.08) 0 1px,transparent 1px 16px),linear-gradient(180deg,#DEE3D8,#C9D2C0)",
+    },
+    link: "Hand-off plan",
   },
 ];
 
-const ExperienceItem = ({
-  company,
-  position,
-  duration,
-  location,
-  description,
-  technologies,
-  index,
-}: ExperienceProps & { index: number }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative grid grid-cols-1 gap-6 border-t border-white/5 pt-8 sm:grid-cols-[200px,1fr] sm:pt-10"
-    >
-      <div className="flex flex-col gap-1">
-        <span className="font-mono text-xs uppercase tracking-wider text-neutral-500">
-          {duration}
-        </span>
-        {location ? (
-          <span className="text-xs text-neutral-600">{location}</span>
-        ) : null}
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <div>
-          <h3 className="text-xl font-medium tracking-tight text-white">
-            {position}
-            <span className="text-neutral-500"> · </span>
-            <span className="text-yellow-300">{company}</span>
-          </h3>
-        </div>
-        <ul className="flex flex-col gap-2">
-          {description.map((item) => (
-            <li
-              key={item}
-              className="flex gap-2 text-sm leading-relaxed text-neutral-400"
-            >
-              <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-yellow-300/60" />
-              {item}
-            </li>
-          ))}
-        </ul>
-        <div className="flex flex-wrap gap-1.5 pt-2">
-          {technologies.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-xs text-neutral-300"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
 export default function Experiences() {
+  const [active, setActive] = useState(0);
+
   return (
-    <section id="experiences" className="scroll-mt-24 py-24 sm:py-32">
-      <SectionHeading
-        eyebrow="03 / Career"
-        title="Where I&apos;ve worked"
-        description="Five years across startups and product companies in Toronto and Hong Kong."
-      />
-      <div className="mt-12 flex flex-col gap-2">
-        {experiences.map((experience, i) => (
-          <ExperienceItem key={experience.company} {...experience} index={i} />
-        ))}
+    <section id="career" className="stream">
+      <div className="container-wide">
+        <div className="stream-head">
+          <div>
+            <span className="section-eyebrow">
+              <span className="sq"></span>How I work
+            </span>
+            <h2 className="section-title">
+              A composable engineering practice. <em>Built around your stack.</em>
+            </h2>
+          </div>
+          <p>
+            Whether you need a system from scratch, a rescue mission on legacy code, or a senior pair
+            on a hard problem — I plug into your team like a permanent engineer, just with a fixed
+            scope.
+          </p>
+        </div>
+
+        <div className="cube-wrap">
+          <div className="cube">
+            <div className="face f-front"></div>
+            <div className="face f-back"></div>
+            <div className="face f-right"></div>
+            <div className="face f-left"></div>
+            <div className="face f-top"></div>
+            <div className="face f-bottom"></div>
+          </div>
+        </div>
+
+        <div className="stream-grid">
+          <div className="stream-tabs" role="tablist">
+            {tabs.map((t, i) => (
+              <button
+                key={i}
+                className={`stream-tab ${active === i ? "active" : ""}`}
+                onClick={() => setActive(i)}
+              >
+                <span className="num">{t.num}</span>
+                <span className="name">{t.name}</span>
+                <span className="chev">→</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="stream-panels">
+            {tabs.map((t, i) => (
+              <div
+                key={i}
+                className="stream-panel"
+                style={{ display: active === i ? "flex" : "none" }}
+              >
+                <div className="stream-panel-eyebrow">{t.eyebrow}</div>
+                <h3>{t.title}</h3>
+                <p>{t.body}</p>
+                <div className="panel-art" style={t.artStyle}>
+                  <span className="badge" style={t.badgeStyle}>{t.badge}</span>
+                  <div className="glyph" style={t.glyphStyle}></div>
+                </div>
+                <a href="#contact" className="panel-link">
+                  {t.link} <span className="arrow">→</span>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

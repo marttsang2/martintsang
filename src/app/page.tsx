@@ -1,19 +1,31 @@
 import About from "@/components/About";
+import CaseStudies from "@/components/CaseStudies";
 import Contact from "@/components/Contact";
+import CtaStrip from "@/components/CtaStrip";
 import Experiences from "@/components/Experiences";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import Industries from "@/components/Industries";
+import Logos from "@/components/Logos";
+import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+    <>
+      <Navbar />
       <Hero />
       <About />
-      <Projects />
+      <CtaStrip />
+      <Logos />
+      <CaseStudies />
       <Experiences />
+      <Projects />
       <Skills />
+      <Industries />
       <Contact />
-    </div>
+      <Footer />
+    </>
   );
 }
