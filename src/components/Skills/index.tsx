@@ -1,69 +1,56 @@
-"use client";
-
-import { motion } from "framer-motion";
-import SectionHeading from "@/components/ui/SectionHeading";
-
-interface SkillCategory {
-  label: string;
-  items: string[];
-}
-
-const skills: SkillCategory[] = [
-  {
-    label: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vite", "Framer Motion"],
-  },
-  {
-    label: "Backend",
-    items: ["Java", "Spring Boot", "Node.js", "Python", "Django", "Go"],
-  },
-  {
-    label: "Databases",
-    items: ["PostgreSQL", "MongoDB", "Oracle", "Redis", "Flyway"],
-  },
-  {
-    label: "Cloud & DevOps",
-    items: ["AWS (EKS, ECR)", "Kubernetes", "Docker", "CodeBuild", "Vercel", "Cloudflare"],
-  },
-  {
-    label: "Tooling",
-    items: ["Git", "GitHub Actions", "Linear", "Figma", "Postman"],
-  },
+const modules = [
+  "React & Next.js",
+  "TypeScript",
+  "Tailwind CSS",
+  "Spring Boot · Java 21",
+  "Node.js · Express",
+  "Python · Django",
+  "Go",
+  "PostgreSQL · Flyway",
+  "MongoDB · Redis",
+  "AWS EKS · ECR",
+  "Kubernetes · Docker",
+  "Vercel · Cloudflare",
 ];
 
 export default function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 py-24 sm:py-32">
-      <SectionHeading
-        eyebrow="04 / Toolbox"
-        title="Tech stack"
-        description="The languages, frameworks, and tools I reach for most often."
-      />
-      <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
-        {skills.map((category, i) => (
-          <motion.div
-            key={category.label}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            className="flex flex-col gap-4 bg-background p-6 transition-colors hover:bg-white/[0.02]"
-          >
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-yellow-300">
-              {category.label}
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {category.items.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-neutral-200"
-                >
-                  {item}
-                </span>
-              ))}
+    <section id="stack" className="modules">
+      <div className="container-wide">
+        <span className="section-eyebrow">
+          <span className="sq"></span>Toolbox
+        </span>
+        <h2 className="section-title">
+          A toolbox for <em>every layer</em>
+          <br />
+          of the stack.
+        </h2>
+
+        <div className="modules-grid">
+          {modules.map((name, i) => (
+            <div key={i} className="module">
+              <div className="m-icon">
+                <span></span>
+              </div>
+              <div className="m-name">{name}</div>
+              <span className="m-arrow">↗</span>
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
+
+        <div className="module-aside">
+          <div>
+            <h4>Looking for something else?</h4>
+            <p>
+              If your team&apos;s on a stack I haven&apos;t listed — Rust, Elixir, Phoenix, Cloudflare Workers — chances are I&apos;ve shipped a side project on it. Ask.
+            </p>
+          </div>
+          <div className="right">
+            <a href="#contact" className="btn btn-light">
+              Ask about your stack <span className="arrow">→</span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
