@@ -1,9 +1,12 @@
 // One-off screenshot capture for project cards.
-// Usage: node scripts/capture-projects.js
-const puppeteer = require("puppeteer-core");
-const path = require("path");
+// Usage: node scripts/capture-projects.mjs [name...]   (no names = all sites)
+import puppeteer from "puppeteer-core";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { findChrome } from "./lib/chrome.mjs";
 
-const CHROME = "C:/Program Files/Google/Chrome/Application/chrome.exe";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const OUT_DIR = path.join(__dirname, "..", "public", "projects");
 
 const sites = [
@@ -11,6 +14,7 @@ const sites = [
   { name: "wplegal", url: "https://wplegal.ca" },
   { name: "helpmeclean", url: "https://helpmeclean.ca" },
 ];
+const only = process.argv.slice(2);
 
 const dismissBannersScript = () => {
   // Dismiss generic cookie / consent banners by clicking the most likely button.
@@ -49,13 +53,13 @@ const dismissBannersScript = () => {
 
 (async () => {
   const browser = await puppeteer.launch({
-    executablePath: CHROME,
+    executablePath: findChrome(),
     headless: "new",
     defaultViewport: { width: 1440, height: 900, deviceScaleFactor: 2 },
     args: ["--no-sandbox", "--hide-scrollbars"],
   });
 
-  for (const site of sites) {
+  for (const site of sites.filter((s) => only.length === 0 || only.includes(s.name))) {
     const page = await browser.newPage();
     console.log(`→ ${site.name}: ${site.url}`);
     try {

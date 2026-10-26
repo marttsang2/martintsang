@@ -1,89 +1,59 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { MapPin } from "lucide-react";
-import SectionHeading from "@/components/ui/SectionHeading";
+import { about, site } from "@/content";
+import { stagger } from "@/lib/stagger";
 
 export default function About() {
   return (
-    <section id="about" className="scroll-mt-24 py-24 sm:py-32">
-      <SectionHeading eyebrow="01 / About" title="A bit about me" />
+    <section id="about" className="scroll-mt-6 pt-section">
+      <div className="frame grid-12 gap-y-12">
+        <h2 data-reveal className="col-span-12 t-section">
+          {about.title}
+        </h2>
 
-      <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[280px,1fr] lg:gap-16">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col gap-4"
-        >
-          <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-white/10">
+        <figure data-reveal className="col-span-12 [--i:1] sm:col-span-6 md:col-span-4">
+          <div className="relative aspect-square w-full overflow-hidden bg-stone">
             <Image
-              src="/avatar.jpg"
-              alt="Martin Tsang"
+              src={site.avatar}
+              alt={site.name}
               fill
               className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 280px"
-              priority
+              sizes="(min-width: 768px) 30vw, (min-width: 640px) 50vw, 100vw"
             />
           </div>
-          <div className="flex items-center gap-2 text-sm text-neutral-400">
-            <MapPin size={14} className="text-yellow-300" />
-            Toronto, Canada
+          <figcaption className="mt-4 t-small text-soft">{about.location}</figcaption>
+        </figure>
+
+        <div className="col-span-12 md:col-span-7 md:col-start-6 lg:col-span-6 lg:col-start-6">
+          <div className="flex max-w-[62ch] flex-col gap-6">
+            <p data-reveal className="[--i:1]">
+              I’m a full-stack software engineer with five years of experience shipping production
+              systems for startups and small businesses across North America and Hong Kong. I work
+              end-to-end — from designing PostgreSQL schemas and Spring Boot APIs to deploying React
+              frontends on Kubernetes.
+            </p>
+            <p data-reveal className="[--i:2]">
+              Lately I’ve been building <strong className="font-semibold">GoPlace</strong>, a
+              multi-tenant booking platform for spas and wellness studios, alongside
+              conversion-focused sites for{" "}
+              <strong className="font-semibold">WP Legal &amp; Notary Public</strong> and{" "}
+              <strong className="font-semibold">Help Me Clean</strong>. I care about measurable
+              outcomes: faster page loads, higher form conversion, fewer on-call pages.
+            </p>
+            <p data-reveal className="[--i:3]">
+              Outside of work, I write Go for fun, lift heavy things, and explore Toronto’s coffee
+              scene.
+            </p>
           </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-col gap-6 text-base leading-relaxed text-neutral-300"
-        >
-          <p>
-            I&apos;m a full-stack software engineer with five years of experience
-            shipping production systems for startups and small businesses across
-            North America and Hong Kong. I work end-to-end — from designing
-            PostgreSQL schemas and Spring Boot APIs to deploying React frontends on
-            Kubernetes.
-          </p>
-          <p>
-            Lately I&apos;ve been building{" "}
-            <span className="text-white">GoPlace</span>, a multi-tenant booking
-            platform for spas and wellness studios, alongside conversion-focused
-            sites for{" "}
-            <span className="text-white">WP Legal &amp; Notary Public</span> and{" "}
-            <span className="text-white">Help Me Clean</span>. I care about
-            measurable outcomes: faster page loads, higher form conversion, fewer
-            on-call pages.
-          </p>
-          <p>
-            Outside of work, I write Go for fun, lift heavy things, and explore
-            Toronto&apos;s coffee scene.
-          </p>
-
-          <dl className="mt-4 grid grid-cols-2 gap-6 border-t border-white/5 pt-8 sm:grid-cols-3">
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-neutral-500">
-                Experience
-              </dt>
-              <dd className="mt-1 text-2xl font-medium text-white">5+ yrs</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-neutral-500">
-                Shipped
-              </dt>
-              <dd className="mt-1 text-2xl font-medium text-white">15+ projects</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-neutral-500">
-                Focus
-              </dt>
-              <dd className="mt-1 text-2xl font-medium text-white">Full-stack</dd>
-            </div>
+          <dl className="mt-14 grid grid-cols-1 gap-x-[var(--gap)] gap-y-8 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
+            {about.facts.map((fact, i) => (
+              <div key={fact.label} data-reveal className="flex flex-col-reverse gap-1" style={stagger(i + 2)}>
+                <dt className="t-small text-soft">{fact.label}</dt>
+                <dd className="t-statement font-medium">{fact.value}</dd>
+              </div>
+            ))}
           </dl>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

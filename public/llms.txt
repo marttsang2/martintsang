@@ -1,0 +1,26 @@
+# Martin Tsang
+
+> Software engineer in Toronto building production web platforms across booking, legal, and AI domains. Five years shipping full-stack systems for startups and small businesses across North America and Hong Kong, from Spring Boot backends on Kubernetes to React frontends. Available for select freelance work.
+
+The site is one page. Each section below is an anchor on https://martintsang.vercel.app/.
+
+## Sections
+
+- [About](https://martintsang.vercel.app/#about): background, focus, and current work.
+- [Recent projects](https://martintsang.vercel.app/#projects): GoPlace, WP Legal & Notary Public, Help Me Clean, and Jomud, with role, year, highlights, and stack.
+- [Career](https://martintsang.vercel.app/#experiences): roles at Asynk, Ace Innovation Limited, Apoidea, and P L Technology Limited.
+- [Tech stack](https://martintsang.vercel.app/#skills): frontend, backend, databases, cloud and DevOps, and tooling.
+- [Contact](https://martintsang.vercel.app/#contact): email, GitHub, and LinkedIn.
+
+## Projects
+
+- [GoPlace](https://booking.goplace.com): Lead Engineer, 2024 – Present. Multi-tenant booking platform for spas and wellness studios. Spring Boot, Java 21, PostgreSQL, React, Vite, AWS EKS, Flyway.
+- [WP Legal & Notary Public](https://wplegal.ca): Full-Stack Developer, 2024. Multi-language marketing site for a Toronto legal and notary firm. Next.js, TypeScript, Tailwind, next-intl, Resend, Vercel.
+- [Help Me Clean](https://helpmeclean.ca): Full-Stack Developer, 2024. Marketing site for a GTA cleaning company serving medical, industrial, and food-processing facilities. Next.js, TypeScript, Tailwind, PDFKit, next-intl, Resend.
+- [Jomud](https://jomud.io): Founding Engineer, 2023. AI-powered job search platform; built the resume builder tool that boosted ATS scan success by 30%. Next.js, Spring Boot, PostgreSQL, AWS, TypeScript.
+
+## Contact
+
+- Email: [tsangmartin1225@gmail.com](mailto:tsangmartin1225@gmail.com)
+- GitHub: [marttsang2](https://github.com/marttsang2)
+- LinkedIn: [marttsang2](https://linkedin.com/in/marttsang2)
