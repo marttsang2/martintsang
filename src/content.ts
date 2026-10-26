@@ -10,7 +10,6 @@ export const site = {
     "I’m Martin — a software engineer based in Toronto. I design and ship full-stack systems across booking, legal, and AI domains, from Spring Boot backends on Kubernetes to polished React frontends.",
   availability: "Available for select freelance work",
   city: "Toronto",
-  timeZone: "America/Toronto",
   email: "tsangmartin1225@gmail.com",
   github: "https://github.com/marttsang2",
   linkedin: "https://linkedin.com/in/marttsang2",
@@ -208,6 +207,7 @@ export const contact = {
   title: "Have a project in mind?",
   followUp: "Let’s build it.",
   body: "I’m taking on a small number of new freelance and contract projects this year. The fastest way to reach me is email.",
+  where: "Based in Toronto, on Eastern Time.",
 };
 
 export const footer = {

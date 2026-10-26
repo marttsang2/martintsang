@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { projects, projectsIntro, type Project } from "@/content";
+import TextLink from "@/components/TextLink";
+import Words from "@/components/Words";
 
 type Layout = "wide" | "left" | "right";
 
@@ -31,20 +33,26 @@ function Screenshot({ project, layout }: { project: Project; layout: Layout }) {
   const { figure, ratio, sizes } = placement[layout];
   return (
     <figure data-reveal className={`${figure} [--i:1]`} data-ui>
-      <div className="flex h-10 items-center bg-ink px-4 t-small text-on-ink-soft">
-        {project.linkLabel}
-      </div>
-      <div className={`relative overflow-hidden bg-stone ${ratio}`} data-progress="through">
-        <div className="drift absolute inset-0">
-          <Image
-            src={project.image}
-            alt={`${project.title} website, ${project.linkLabel}`}
-            fill
-            className="object-cover object-top"
-            sizes={sizes}
-          />
-        </div>
-      </div>
+      <a href={project.link} target="_blank" rel="noopener noreferrer" tabIndex={-1} data-shot className="shot block">
+        <span className="flex h-10 items-center gap-2 bg-ink px-4 t-small text-on-ink-soft">
+          {project.linkLabel}
+          <span aria-hidden className="shot-arrow">
+            ↗
+          </span>
+        </span>
+        <span className={`relative block overflow-hidden bg-stone ${ratio}`} data-progress="through">
+          <span className="drift absolute inset-0">
+            <Image
+              src={project.image}
+              alt={`${project.title} website, ${project.linkLabel}`}
+              fill
+              className="shot-img object-cover object-top"
+              sizes={sizes}
+            />
+          </span>
+          <span aria-hidden className="cover" />
+        </span>
+      </a>
     </figure>
   );
 }
@@ -55,14 +63,9 @@ function Details({ project, layout }: { project: Project; layout: Layout }) {
     <div className={`${placement[layout].aside} flex flex-col gap-y-8`}>
       <div data-reveal className={`flex flex-col gap-6 [--i:2] ${wide ? "md:col-span-5" : ""}`}>
         <p>{project.description}</p>
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link w-fit font-medium"
-        >
-          {project.linkLabel} <span className="arrow" aria-hidden>↗</span>
-        </a>
+        <TextLink href={project.link} className="w-fit font-medium">
+          {project.linkLabel}
+        </TextLink>
       </div>
       <div data-reveal className={`flex flex-col gap-6 [--i:3] ${wide ? "md:col-span-6 md:col-start-7" : ""}`}>
         <ul className="flex list-disc flex-col gap-3 pl-5 t-small marker:text-soft">
@@ -78,10 +81,10 @@ function Details({ project, layout }: { project: Project; layout: Layout }) {
 
 export default function Projects() {
   return (
-    <section id="projects" className="scroll-mt-6 pt-section">
+    <section id="projects" data-chapter="paper" className="scroll-mt-6 pt-section">
       <div className="frame grid-12 items-end gap-y-6">
-        <h2 data-reveal className="col-span-12 t-section md:col-span-7">
-          {projectsIntro.title}
+        <h2 data-lines className="col-span-12 t-section md:col-span-7">
+          <Words text={projectsIntro.title} />
         </h2>
         <p data-reveal className="col-span-12 max-w-[44ch] [--i:1] md:col-span-5 md:col-start-8">
           {projectsIntro.description}
@@ -94,8 +97,8 @@ export default function Projects() {
           return (
             <article key={project.title} className="grid-12 gap-y-8 md:gap-y-10">
               <header className="col-span-12 grid grid-cols-subgrid items-end gap-y-3">
-                <h3 data-reveal className="col-span-12 t-section lg:col-span-9">
-                  {project.title}
+                <h3 data-lines className="col-span-12 t-section lg:col-span-9">
+                  <Words text={project.title} />
                 </h3>
                 <p data-reveal className="col-span-12 t-small text-soft [--i:1] lg:col-span-3 lg:text-right">
                   <span className="font-medium text-ink">{project.role}</span>

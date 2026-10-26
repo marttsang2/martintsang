@@ -1,13 +1,29 @@
+import { Fragment, type CSSProperties } from "react";
 import Image from "next/image";
 import { about, site } from "@/content";
 import { stagger } from "@/lib/stagger";
+import Words from "@/components/Words";
+
+// Each digit rolls up to its value once. The digit stays in the text; CSS draws the rolling strip over it.
+function Rolling({ value }: { value: string }) {
+  const parts = value.split(/(\d)/);
+  return parts.map((part, i) => {
+    if (!/^\d$/.test(part)) return <Fragment key={i}>{part}</Fragment>;
+    const column = parts.slice(0, i).filter((p) => /^\d$/.test(p)).length;
+    return (
+      <span key={i} className="roll" style={{ "--d": part, "--c": column } as CSSProperties}>
+        {part}
+      </span>
+    );
+  });
+}
 
 export default function About() {
   return (
-    <section id="about" className="scroll-mt-6 pt-section">
+    <section id="about" data-chapter="paper" className="scroll-mt-6 pt-section">
       <div className="frame grid-12 gap-y-12">
-        <h2 data-reveal className="col-span-12 t-section">
-          {about.title}
+        <h2 data-lines className="col-span-12 t-section">
+          <Words text={about.title} />
         </h2>
 
         <figure data-reveal className="col-span-12 [--i:1] sm:col-span-6 md:col-span-4">
@@ -16,9 +32,10 @@ export default function About() {
               src={site.avatar}
               alt={site.name}
               fill
-              className="object-cover"
+              className="settle object-cover"
               sizes="(min-width: 768px) 30vw, (min-width: 640px) 50vw, 100vw"
             />
+            <span aria-hidden className="cover" />
           </div>
           <figcaption className="mt-4 t-small text-soft">{about.location}</figcaption>
         </figure>
@@ -49,7 +66,9 @@ export default function About() {
             {about.facts.map((fact, i) => (
               <div key={fact.label} data-reveal className="flex flex-col-reverse gap-1" style={stagger(i + 2)}>
                 <dt className="t-small text-soft">{fact.label}</dt>
-                <dd className="t-statement font-medium">{fact.value}</dd>
+                <dd className="t-statement font-medium tabular-nums">
+                  <Rolling value={fact.value} />
+                </dd>
               </div>
             ))}
           </dl>
