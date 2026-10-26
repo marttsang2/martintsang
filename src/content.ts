@@ -37,6 +37,7 @@ export const about = {
 };
 
 export type Project = {
+  id: string;
   title: string;
   role: string;
   year: string;
@@ -56,6 +57,7 @@ export const projectsIntro = {
 
 export const projects: Project[] = [
   {
+    id: "goplace",
     title: "GoPlace",
     role: "Lead Engineer",
     year: "2024 – Present",
@@ -72,6 +74,7 @@ export const projects: Project[] = [
     linkLabel: "booking.goplace.com",
   },
   {
+    id: "wp-legal",
     title: "WP Legal & Notary Public",
     role: "Full-Stack Developer",
     year: "2024",
@@ -88,6 +91,7 @@ export const projects: Project[] = [
     linkLabel: "wplegal.ca",
   },
   {
+    id: "help-me-clean",
     title: "Help Me Clean",
     role: "Full-Stack Developer",
     year: "2024",
@@ -104,6 +108,7 @@ export const projects: Project[] = [
     linkLabel: "helpmeclean.ca",
   },
   {
+    id: "jomud",
     title: "Jomud",
     role: "Founding Engineer",
     year: "2023",
