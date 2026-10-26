@@ -18,13 +18,32 @@
     --gap: clamp(16px, 1.6vw, 24px);
     --section-space: clamp(112px, 12vw, 192px);
 
+    /* The header sticks with its first row scrolled away on phones, and 12px of its top padding on wider screens. */
+    --header-top: -54px;
+    --header-h: 46px;
+
     --t-display: calc(var(--frame) / 5.4);
     --t-section: clamp(44px, 6.6vw, 112px);
     --t-statement: clamp(24px, 2.4vw, 36px);
     --t-body: clamp(17px, 1.2vw, 19px);
     --t-small: 15px;
 
-    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+    --t-press: 140ms;
+    --t-hover: 180ms;
+    --t-move: 360ms;
+    --t-reveal: 800ms;
+    --stagger-line: 90ms;
+    --stagger-item: 70ms;
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --header-top: -12px;
+      --header-h: 66px;
+    }
   }
 
   @media (max-width: 639px) {
@@ -104,7 +123,10 @@
     line-height: 1.5;
   }
 
+  /* The darker honey is a layer that fades in, so the hover animates opacity, not colour. */
   .button {
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
@@ -116,64 +138,236 @@
     font-size: var(--t-small);
     font-weight: 600;
     transition:
-      background-color 0.2s ease,
-      transform 0.2s var(--ease-out);
+      translate 420ms var(--ease-out),
+      scale var(--t-press) var(--ease-out);
   }
-  .button:hover {
+  .button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
     background: var(--honey-deep);
-  }
-  .button:active {
-    transform: scale(0.97);
+    opacity: 0;
+    transition: opacity var(--t-hover) ease;
   }
   .button:focus-visible {
     outline-color: var(--honey);
   }
 
-  .link {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.3em;
-    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
-    transition:
-      text-decoration-color 0.2s ease,
-      color 0.2s ease;
+  /* Links carry two lines: the resting one hands over to a full-strength one drawn from the left. */
+  .link-line {
+    position: relative;
+    display: inline-block;
   }
-  .link:hover {
-    text-decoration-color: var(--honey);
+  .link-line::before,
+  .link-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(0.13em - var(--line-weight, 2px));
+    height: var(--line-weight, 2px);
+    background: currentColor;
+    pointer-events: none;
+    transition: transform var(--t-move) var(--ease-out);
+  }
+  .link-line::before {
+    opacity: var(--line-rest, 0.35);
+    transform-origin: left;
+    transition-delay: 120ms;
+  }
+  .link-line::after {
+    background: var(--line-hover, currentColor);
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  .link-quiet .link-line::before {
+    content: none;
+  }
+  .link:focus-visible .link-line::after {
+    transform: none;
+    transform-origin: left;
+  }
+  .link:active .link-line {
+    opacity: 0.7;
   }
 
   .arrow {
     display: inline-block;
-    transition: transform 0.25s var(--ease-out);
+    transition: transform var(--t-move) var(--ease-out);
   }
-  a:hover > .arrow,
   a:focus-visible > .arrow {
     transform: translate(3px, -3px);
   }
+
+  @media (hover: hover) and (pointer: fine) {
+    .button:hover::before {
+      opacity: 1;
+    }
+    .link:hover .link-line::before {
+      transform: scaleX(0);
+      transform-origin: right;
+      transition-delay: 0ms;
+    }
+    .link:hover .link-line::after {
+      transform: none;
+      transform-origin: left;
+      transition-delay: 120ms;
+    }
+    a:hover > .arrow {
+      transform: translate(3px, -3px);
+    }
+  }
 }
 
-/* Entrances: content is visible without JS. Motion.tsx adds .reveal-ready once it can reveal. */
+/* The header takes the colour of the chapter under it, as a hard cut; Motion sets data-ground. */
+.site-header {
+  position: sticky;
+  top: var(--header-top);
+  z-index: 40;
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.site-header[data-ground="paper"] {
+  background: var(--paper);
+  color: var(--ink);
+}
+.site-header[data-ground="stone"] {
+  background: var(--stone);
+  color: var(--ink);
+}
+.site-header[data-ground="honey"] {
+  background: var(--honey);
+  color: var(--ink);
+}
+.site-header[data-ground="honey"] .brand-dot {
+  color: inherit;
+}
+
+/* One bar under the active section's link; its fill is how far through that section the reader is. */
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: calc(0.13em - 2px);
+  width: 100px;
+  height: 2px;
+  transform-origin: left;
+  transform: translateX(var(--x, 0px)) scaleX(var(--w, 0));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--t-move) var(--ease-out),
+    opacity 240ms ease;
+}
+.nav-indicator[data-on] {
+  opacity: 1;
+}
+.nav-indicator[data-snap] {
+  transition: opacity 240ms ease;
+}
+.nav-indicator::before,
+.nav-indicator > span {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+}
+.nav-indicator::before {
+  opacity: 0.25;
+}
+.nav-indicator > span {
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+}
+
+/* Words sit in masks so headings can rise line by line. The padding keeps Geist's descenders (0.16em) inside the mask at 0.86 leading. */
+.word {
+  display: inline-block;
+  padding: 0.04em 0.06em 0.12em;
+  margin: -0.04em -0.06em -0.12em;
+  clip-path: inset(0);
+}
+.word-in {
+  display: inline-block;
+}
+
+/* Pictures open top first, the edge that scrolls into view first: a ground-coloured cover drops away while the picture settles from a slight scale. */
+.cover {
+  position: absolute;
+  inset: 0;
+  background: var(--stone);
+  transform-origin: bottom;
+  transform: scaleY(0);
+  pointer-events: none;
+}
+.settle {
+  transition: transform 1400ms var(--ease-soft) 150ms;
+}
+
+.shot-img {
+  transition:
+    transform 1400ms var(--ease-soft) 150ms,
+    translate 900ms var(--ease-out),
+    scale 700ms var(--ease-out);
+}
+.shot-arrow {
+  display: inline-block;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity var(--t-hover) ease,
+    transform var(--t-move) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .shot:hover .shot-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shot:hover .shot-img {
+    scale: 1.04;
+  }
+}
+
+/* Figures roll up to their value once. The digit in the text is the real value; the strip is drawn over it. */
+.roll {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  clip-path: inset(0);
+}
+.roll::after {
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9" / "";
+  position: absolute;
+  inset: 0 0 auto;
+  white-space: pre;
+  text-align: center;
+  color: var(--ink);
+  transform: translateY(calc(var(--d) * -10%));
+}
+
+/* Entrances: content is visible without JS. Motion adds .reveal-ready once it can reveal. */
 [data-reveal] {
   transition:
-    opacity 0.8s var(--ease-out),
-    transform 0.8s var(--ease-out);
+    opacity 700ms var(--ease-out),
+    transform var(--t-reveal) var(--ease-expo);
   transition-delay: calc(var(--i, 0) * 80ms);
 }
 .reveal-ready [data-reveal]:not(.is-in) {
   opacity: 0;
-  transform: translateY(28px);
   transition: none;
 }
 
-.hero-rise {
-  animation: rise 0.9s var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 90ms);
+.hero-name {
+  transform-origin: 0 100%;
+  scale: calc(1 - var(--p, 0) * 0.06);
 }
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(32px);
-  }
+.hero-layer {
+  display: block;
+  transition: translate 1200ms var(--ease-out);
 }
 
 .route-line {
@@ -184,13 +378,22 @@
   transform: scaleY(var(--p, 0));
 }
 .route-stop {
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s var(--ease-out);
+  transition: transform 0.3s var(--ease-out);
+}
+.route-stop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--honey);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 .route-stop[data-reached="true"] {
-  background: var(--honey);
   transform: scale(1.3);
+}
+.route-stop[data-reached="true"]::after {
+  opacity: 1;
 }
 
 .drift {
@@ -202,23 +405,84 @@
   transform: scale(calc(0.94 + var(--p, 1) * 0.06));
 }
 
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal],
-  .hero-rise {
-    transition: opacity 0.6s ease;
-    animation: none;
+/* Every travelling or scaling start state lives here, so reduced motion gets the finished page. */
+@media (prefers-reduced-motion: no-preference) {
+  .button:active {
+    scale: 0.97;
   }
+
   .reveal-ready [data-reveal]:not(.is-in) {
+    transform: translateY(24px);
+  }
+
+  .hero-rise {
+    animation: rise 0.9s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+  .hero-name .word-in {
+    animation: line-up 800ms var(--ease-expo) both;
+    animation-delay: calc(120ms + var(--i, 0) * 90ms + var(--w, 0) * var(--stagger-line));
+  }
+
+  .reveal-ready [data-lines]:not(.is-in) .word-in {
+    transform: translateY(120%);
+  }
+  [data-lines].is-in .word-in {
+    transition: transform 900ms var(--ease-expo);
+    transition-delay: calc(var(--line, 0) * var(--stagger-line));
+  }
+
+  .reveal-ready [data-reveal]:not(.is-in) .cover {
+    transform: scaleY(1);
+  }
+  [data-reveal].is-in .cover {
+    transition: transform 1000ms var(--ease-expo) 80ms;
+  }
+  .reveal-ready [data-reveal]:not(.is-in) .settle,
+  .reveal-ready [data-reveal]:not(.is-in) .shot-img {
+    transform: scale(1.12);
+  }
+
+  .reveal-ready [data-reveal]:not(.is-in) .roll::after {
     transform: none;
   }
+  [data-reveal].is-in .roll::after {
+    transition: transform 1000ms var(--ease-expo);
+    transition-delay: calc(160ms + var(--c, 0) * var(--stagger-item));
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+@keyframes line-up {
+  from {
+    transform: translateY(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .reveal-ready .route-line,
-  .route-line {
-    transform: none;
-  }
-  .drift {
-    transform: none;
-  }
+  .route-line,
+  .drift,
   .wordmark-scale {
+    transform: none;
+  }
+  .hero-name {
+    scale: none;
+  }
+  .link-line::before,
+  .link-line::after,
+  .nav-indicator,
+  .arrow,
+  .shot-arrow,
+  .route-stop {
+    transition-property: opacity;
+  }
+  .route-stop[data-reached="true"] {
     transform: none;
   }
 }

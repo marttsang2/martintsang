@@ -1,14 +1,15 @@
 import { footer, nav, site } from "@/content";
+import TextLink from "@/components/TextLink";
 
 export default function Footer() {
   return (
-    <footer className="overflow-hidden bg-honey pb-6 pt-[clamp(104px,10vw,160px)]">
+    <footer data-chapter="honey" className="overflow-hidden bg-honey pb-6 pt-[clamp(104px,10vw,160px)]">
       <div className="frame">
         <nav aria-label="Footer" className="flex justify-between t-small font-medium sm:justify-start sm:gap-8">
           {nav.map((link) => (
-            <a key={link.id} href={`#${link.id}`} className="link">
+            <TextLink key={link.id} href={`#${link.id}`}>
               {link.label}
-            </a>
+            </TextLink>
           ))}
         </nav>
         <div data-progress="enter" className="mt-[clamp(32px,4vw,56px)]">

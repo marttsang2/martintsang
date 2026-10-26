@@ -1,11 +1,12 @@
 import { careerIntro, roles } from "@/content";
+import Words from "@/components/Words";
 
 export default function Experiences() {
   return (
-    <section id="experiences" className="mt-section scroll-mt-0 bg-stone py-section">
+    <section id="experiences" data-chapter="stone" className="mt-section scroll-mt-0 bg-stone py-section">
       <div className="frame grid-12 items-end gap-y-6">
-        <h2 data-reveal className="col-span-12 t-section md:col-span-7">
-          {careerIntro.title}
+        <h2 data-lines className="col-span-12 t-section md:col-span-7">
+          <Words text={careerIntro.title} />
         </h2>
         <p data-reveal className="col-span-12 max-w-[44ch] [--i:1] md:col-span-5 md:col-start-8">
           {careerIntro.description}
