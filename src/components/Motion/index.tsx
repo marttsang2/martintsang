@@ -18,7 +18,6 @@ const progress: Record<Mode, (box: Box, y: number, vh: number) => number> = {
 const followers = [
   { zone: "[data-hero]", layer: "[data-hero-layer]", x: -14, y: -8 },
   { zone: "[data-shot]", layer: "img", x: -14, y: -10 },
-  { zone: "[data-magnet]", layer: null, x: 6, y: 4 },
 ];
 
 // Document position from layout offsets, so transforms (reveals, drift, scale) never skew it.
@@ -189,22 +188,17 @@ function pointerLayers() {
 
   for (const { zone: zoneSelector, layer: layerSelector, x, y } of followers) {
     for (const zone of all(zoneSelector)) {
-      const layer = layerSelector ? zone.querySelector<HTMLElement>(layerSelector) : zone;
+      const layer = zone.querySelector<HTMLElement>(layerSelector);
       if (!layer) continue;
       let frame = 0;
       let pointer = { x: 0, y: 0 };
-      let shift = { x: 0, y: 0 };
 
       const apply = () => {
         frame = 0;
         const box = zone.getBoundingClientRect();
-        // The magnet moves its own zone, so measure where it would sit unmoved.
-        const left = box.left - (layer === zone ? shift.x : 0);
-        const top = box.top - (layer === zone ? shift.y : 0);
-        const nx = clamp01((pointer.x - left) / box.width) * 2 - 1;
-        const ny = clamp01((pointer.y - top) / box.height) * 2 - 1;
-        shift = { x: nx * x, y: ny * y };
-        layer.style.translate = `${shift.x.toFixed(2)}px ${shift.y.toFixed(2)}px`;
+        const nx = clamp01((pointer.x - box.left) / box.width) * 2 - 1;
+        const ny = clamp01((pointer.y - box.top) / box.height) * 2 - 1;
+        layer.style.translate = `${(nx * x).toFixed(2)}px ${(ny * y).toFixed(2)}px`;
       };
       const move = (event: PointerEvent) => {
         if (event.pointerType !== "mouse" || !fine.matches || calm.matches) return;
@@ -214,7 +208,6 @@ function pointerLayers() {
       const leave = () => {
         cancelAnimationFrame(frame);
         frame = 0;
-        shift = { x: 0, y: 0 };
         layer.style.translate = "";
       };
 
@@ -230,9 +223,62 @@ function pointerLayers() {
   return () => cleanups.forEach((cleanup) => cleanup());
 }
 
+// The header slides away while the reader scrolls down and returns on any scroll up. It stays in view at the top
+// of the page and while an in-page link scrolls the page; CSS keeps it in view under reduced motion and while it holds focus.
+function hidingHeader() {
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  if (!header) return () => {};
+  let last = window.scrollY;
+  let travel = 0;
+  let frame = 0;
+  let jump = 0;
+  let top = header.offsetHeight * 2;
+
+  const update = () => {
+    frame = 0;
+    const y = window.scrollY;
+    const dy = y - last;
+    last = y;
+    travel = Math.sign(dy) === Math.sign(travel) ? travel + dy : dy;
+    if (y < top || jump) header.removeAttribute("data-hidden");
+    else if (travel > 16) header.setAttribute("data-hidden", "");
+    else if (travel < -8) header.removeAttribute("data-hidden");
+  };
+  // A jump ends once the page has not scrolled for 200 ms.
+  const holdJump = () => {
+    clearTimeout(jump);
+    jump = window.setTimeout(() => {
+      jump = 0;
+      travel = 0;
+    }, 200);
+  };
+  const scrolled = () => {
+    if (jump) holdJump();
+    if (!frame) frame = requestAnimationFrame(update);
+  };
+  const clicked = (event: MouseEvent) => {
+    if (!(event.target instanceof Element) || !event.target.closest('a[href^="#"]')) return;
+    header.removeAttribute("data-hidden");
+    holdJump();
+  };
+  const resized = () => (top = header.offsetHeight * 2);
+
+  window.addEventListener("scroll", scrolled, { passive: true });
+  window.addEventListener("resize", resized);
+  document.addEventListener("click", clicked);
+  return () => {
+    cancelAnimationFrame(frame);
+    clearTimeout(jump);
+    window.removeEventListener("scroll", scrolled);
+    window.removeEventListener("resize", resized);
+    document.removeEventListener("click", clicked);
+    header.removeAttribute("data-hidden");
+  };
+}
+
 export default function Motion() {
   useEffect(() => {
-    const cleanups = [reveals(), scrollLinked(), pointerLayers()];
+    const cleanups = [reveals(), scrollLinked(), pointerLayers(), hidingHeader()];
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
 
