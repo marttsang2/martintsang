@@ -1,139 +1,53 @@
-"use client";
-
-import { motion } from "framer-motion";
-import SectionHeading from "@/components/ui/SectionHeading";
-
-interface ExperienceProps {
-  company: string;
-  position: string;
-  duration: string;
-  location?: string;
-  description: string[];
-  technologies: string[];
-}
-
-const experiences: ExperienceProps[] = [
-  {
-    company: "Asynk",
-    position: "Software Developer",
-    duration: "Feb 2023 — Present",
-    location: "Remote",
-    description: [
-      "Built a career development platform with Next.js and TypeScript from scratch alongside a team of 5",
-      "Led a new hire in shipping a resume builder service in Node.js, lifting ATS scan success by 30%",
-      "Owned deployment of frontend and backend services to AWS EKS via ECR pipelines",
-    ],
-    technologies: ["Next.js", "TypeScript", "Node.js", "AWS", "Kubernetes"],
-  },
-  {
-    company: "Ace Innovation Limited",
-    position: "Software Developer",
-    duration: "Jan 2024 — May 2024",
-    location: "Hong Kong",
-    description: [
-      "Developed a game provider service in Java / Spring Boot / OracleDB, contributing to higher customer retention",
-      "Integrated Jumio KYC identity verification and Google Address Validation into the user onboarding service",
-    ],
-    technologies: ["Java", "Spring Boot", "Oracle", "Jumio KYC"],
-  },
-  {
-    company: "Apoidea",
-    position: "Software Engineer",
-    duration: "Mar 2022 — Jan 2024",
-    location: "Hong Kong",
-    description: [
-      "Built a generic financial analysis report-generation module powering downstream data manipulation",
-      "Shipped a Node.js microservice handling PDF-based integrations across multiple data pipelines",
-      "Used MongoDB to manage data flowing from ML models, improving data lifecycle handling",
-    ],
-    technologies: ["Node.js", "MongoDB", "Microservices"],
-  },
-  {
-    company: "P L Technology Limited",
-    position: "Software Engineer",
-    duration: "Jan 2021 — Feb 2022",
-    location: "Hong Kong",
-    description: [
-      "Automated digital marketing data extraction with Selenium crawlers, eliminating 2 manual roles",
-      "Iterated on a loan website using React and Django alongside a team of 5 engineers",
-      "Revamped 200+ test cases, raising coverage by 40% and cutting post-deploy issues by 60%",
-    ],
-    technologies: ["React", "Django", "Selenium", "Python"],
-  },
-];
-
-const ExperienceItem = ({
-  company,
-  position,
-  duration,
-  location,
-  description,
-  technologies,
-  index,
-}: ExperienceProps & { index: number }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative grid grid-cols-1 gap-6 border-t border-white/5 pt-8 sm:grid-cols-[200px,1fr] sm:pt-10"
-    >
-      <div className="flex flex-col gap-1">
-        <span className="font-mono text-xs uppercase tracking-wider text-neutral-500">
-          {duration}
-        </span>
-        {location ? (
-          <span className="text-xs text-neutral-600">{location}</span>
-        ) : null}
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <div>
-          <h3 className="text-xl font-medium tracking-tight text-white">
-            {position}
-            <span className="text-neutral-500"> · </span>
-            <span className="text-yellow-300">{company}</span>
-          </h3>
-        </div>
-        <ul className="flex flex-col gap-2">
-          {description.map((item) => (
-            <li
-              key={item}
-              className="flex gap-2 text-sm leading-relaxed text-neutral-400"
-            >
-              <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-yellow-300/60" />
-              {item}
-            </li>
-          ))}
-        </ul>
-        <div className="flex flex-wrap gap-1.5 pt-2">
-          {technologies.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-xs text-neutral-300"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+import { careerIntro, roles } from "@/content";
 
 export default function Experiences() {
   return (
-    <section id="experiences" className="scroll-mt-24 py-24 sm:py-32">
-      <SectionHeading
-        eyebrow="03 / Career"
-        title="Where I&apos;ve worked"
-        description="Five years across startups and product companies in Toronto and Hong Kong."
-      />
-      <div className="mt-12 flex flex-col gap-2">
-        {experiences.map((experience, i) => (
-          <ExperienceItem key={experience.company} {...experience} index={i} />
-        ))}
+    <section id="experiences" className="mt-section scroll-mt-0 bg-stone py-section">
+      <div className="frame grid-12 items-end gap-y-6">
+        <h2 data-reveal className="col-span-12 t-section md:col-span-7">
+          {careerIntro.title}
+        </h2>
+        <p data-reveal className="col-span-12 max-w-[44ch] [--i:1] md:col-span-5 md:col-start-8">
+          {careerIntro.description}
+        </p>
+      </div>
+
+      <div className="frame relative mt-[clamp(64px,8vw,112px)] [--route:6.5px] lg:[--route:calc((var(--frame)-11*var(--gap))/12*3+3*var(--gap))]">
+        <div
+          aria-hidden
+          data-progress="line"
+          className="absolute bottom-3 left-[calc(var(--route)-1.5px)] top-3 w-[3px] bg-[color-mix(in_srgb,var(--ink)_12%,transparent)]"
+        >
+          <div className="route-line h-full w-full bg-ink" />
+        </div>
+
+        <ol className="flex flex-col gap-[clamp(56px,6vw,96px)]">
+          {roles.map((role) => (
+            <li key={role.company} className="grid-12 relative gap-y-4">
+              <span
+                aria-hidden
+                data-stop
+                className="route-stop absolute left-[calc(var(--route)-6.5px)] top-[0.55em] h-[13px] w-[13px] rounded-full border-[3px] border-ink bg-stone"
+              />
+              <div data-reveal className="col-span-12 pl-8 lg:col-span-3 lg:pl-0">
+                <p className="font-medium tabular-nums">{role.duration}</p>
+                <p className="t-small text-soft">{role.location}</p>
+              </div>
+              <h3 data-reveal className="col-span-12 pl-8 t-statement font-medium [--i:1] lg:col-span-4 lg:pl-10">
+                {role.position}
+                <span className="block text-soft">{role.company}</span>
+              </h3>
+              <div data-reveal className="col-span-12 max-w-[68ch] pl-8 [--i:2] lg:col-span-5 lg:col-start-8 lg:pl-0">
+                <ul className="flex list-disc flex-col gap-3 pl-5 marker:text-soft">
+                  {role.description.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <p className="mt-5 t-small text-soft">{role.technologies.join(" · ")}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

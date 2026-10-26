@@ -4,57 +4,221 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 54 100% 62%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 0 0% 83.1%;
-    --radius: 0.75rem;
-  }
-}
+    --paper: #f4f4f0;
+    --stone: #e8e7e1;
+    --ink: #0c0c0b;
+    --soft: #56544e;
+    --on-ink: #f4f4f0;
+    --on-ink-soft: #a3a199;
+    --honey: #ffd43b;
+    --honey-deep: #f2c200;
 
-@layer base {
-  * {
-    @apply border-border;
+    --margin: clamp(20px, 3.2vw, 48px);
+    --frame: min(100vw - 2 * var(--margin), 1600px);
+    --gap: clamp(16px, 1.6vw, 24px);
+    --section-space: clamp(112px, 12vw, 192px);
+
+    --t-display: calc(var(--frame) / 5.4);
+    --t-section: clamp(44px, 6.6vw, 112px);
+    --t-statement: clamp(24px, 2.4vw, 36px);
+    --t-body: clamp(17px, 1.2vw, 19px);
+    --t-small: 15px;
+
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
   }
+
+  @media (max-width: 639px) {
+    :root {
+      --t-display: calc(var(--frame) / 2.95);
+    }
+  }
+
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
+
   body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: var(--t-body);
+    line-height: 1.55;
+    font-feature-settings: "ss01" 1;
+    overflow-x: clip;
   }
+
   ::selection {
-    @apply bg-yellow-300 text-black;
+    background: var(--honey);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-@layer utilities {
-  .text-balance {
+@layer components {
+  .frame {
+    width: var(--frame);
+    margin-inline: auto;
+  }
+
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+  }
+
+  .t-display {
+    font-size: var(--t-display);
+    font-weight: 500;
+    line-height: 0.86;
+    letter-spacing: -0.055em;
+    margin-left: -0.04em;
+  }
+
+  .t-section {
+    font-size: var(--t-section);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
     text-wrap: balance;
   }
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-    background-size: 64px 64px;
+
+  .t-statement {
+    font-size: var(--t-statement);
+    font-weight: 450;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
   }
-  .radial-fade {
-    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+
+  .t-small {
+    font-size: var(--t-small);
+    line-height: 1.5;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 52px;
+    padding: 0 1.6em;
+    border-radius: 999px;
+    background: var(--honey);
+    color: var(--ink);
+    font-size: var(--t-small);
+    font-weight: 600;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s var(--ease-out);
+  }
+  .button:hover {
+    background: var(--honey-deep);
+  }
+  .button:active {
+    transform: scale(0.97);
+  }
+  .button:focus-visible {
+    outline-color: var(--honey);
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition:
+      text-decoration-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--honey);
+  }
+
+  .arrow {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
+  }
+  a:hover > .arrow,
+  a:focus-visible > .arrow {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* Entrances: content is visible without JS. Motion.tsx adds .reveal-ready once it can reveal. */
+[data-reveal] {
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.reveal-ready [data-reveal]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: none;
+}
+
+.hero-rise {
+  animation: rise 0.9s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+.route-line {
+  transform-origin: top;
+  transform: scaleY(var(--p, 1));
+}
+.reveal-ready .route-line {
+  transform: scaleY(var(--p, 0));
+}
+.route-stop {
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s var(--ease-out);
+}
+.route-stop[data-reached="true"] {
+  background: var(--honey);
+  transform: scale(1.3);
+}
+
+.drift {
+  transform: translateY(calc((0.5 - var(--p, 0.5)) * 6%)) scale(1.08);
+}
+
+.wordmark-scale {
+  transform-origin: bottom left;
+  transform: scale(calc(0.94 + var(--p, 1) * 0.06));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .hero-rise {
+    transition: opacity 0.6s ease;
+    animation: none;
+  }
+  .reveal-ready [data-reveal]:not(.is-in) {
+    transform: none;
+  }
+  .reveal-ready .route-line,
+  .route-line {
+    transform: none;
+  }
+  .drift {
+    transform: none;
+  }
+  .wordmark-scale {
+    transform: none;
   }
 }
